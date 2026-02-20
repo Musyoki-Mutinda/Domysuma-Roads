@@ -1,0 +1,162 @@
+<section>
+
+  <app-parallax-storytelling></app-parallax-storytelling>
+
+
+  <!-- ============================================ -->
+  <!-- ABOUT US SECTION -->
+  <!-- ============================================ -->
+  <section class="about-us-sec">
+    <div class="about-content">
+      <div class="about-text">
+        <h2>About Us</h2>
+        <p>
+          At <strong>Domysuma Construction & Road Works</strong>, we are passionate about creating
+          timeless construction solutions that balance functionality, innovation,
+          and structural excellence. With decades of combined experience, our team
+          delivers world-class infrastructure that redefines spaces across residential,
+          commercial, and public works projects.
+        </p>
+        <p>
+          From concept to completion, we collaborate closely with our clients to
+          transform ideas into enduring landmarks, each project a reflection of
+          purpose, precision, and quality craftsmanship.
+        </p>
+        <button routerLink="/about" class="btn-custom btn-custom-primary-outline">
+          Learn More →
+        </button>
+      </div>
+
+      <div class="about-image">
+        <img src="assets/images/AboutUs_Placeholder.jpg" alt="About Domysuma Construction" />
+      </div>
+    </div>
+  </section>
+
+  
+  <!-- ============================================ -->
+  <!-- WHY CHOOSE US -->
+  <!-- ============================================ -->
+  <section class="services-cards-sec">
+    <h3 class="typing-title">
+      Why Choose Domysuma <span class="typing-word">{{ currentWord }}</span><span class="cursor">|</span>
+    </h3>
+
+    <div class="services-cont">
+      <div class="services-card">
+        <i class="fa-solid fa-circle-check"></i>
+        <div>
+          <h4>Quality</h4>
+        </div>
+      </div>
+
+      <div class="services-card">
+        <i class="fa-solid fa-lock"></i>
+        <div>
+          <h4>Integrity</h4>
+        </div>
+      </div>
+
+      <div class="services-card">
+        <i class="fa-solid fa-user-group"></i>
+        <div>
+          <h4>People</h4>
+        </div>
+      </div>
+
+      <div class="services-card">
+        <i class="fa-solid fa-heart"></i>
+        <div>
+          <h4>Passion</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================ -->
+  <!-- DESIGN PHILOSOPHY SECTION -->
+  <!-- ============================================ -->
+  <section class="about-us-sec design-philosophy-sec">
+    <div class="about-content reversed">
+      
+      <!-- Image on the Left -->
+      <div class="about-image">
+        <img src="assets/images/DesignPhilosophy_Placeholder.jpg" alt="Domysuma Construction Philosophy" />
+      </div>
+
+      <!-- Text on the Right -->
+      <div class="about-text">
+        <h2>Our Construction Philosophy</h2>
+        <p>
+          At <strong>Domysuma Construction & Road Works</strong>, every project begins with
+          understanding how infrastructure serves communities. Our philosophy blends functionality, 
+          durability, and innovation to craft structures that elevate everyday life.
+        </p>
+
+        <p>
+          We believe construction should be timeless. Each project we undertake
+          balances structural excellence, safety standards, and sustainable
+          building principles—resulting in infrastructure that inspires, endures, and
+          transforms the communities it serves.
+        </p>
+
+        <button routerLink="/services" class="btn-custom btn-custom-primary-outline">
+          Learn More →
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================ -->
+  <!-- PROJECTS PREVIEW SECTION -->
+  <!-- ============================================ -->
+  <section class="projects-preview">
+    <h2>Our Projects</h2>
+
+    <!-- Desktop: 4 cards in a row (hidden on mobile) -->
+    <div class="desktop-only">
+      <div class="categories-row">
+        <div
+          class="category-card"
+          *ngFor="let c of categoriesPreview"
+          (click)="openCategory(c.slug)"
+        >
+          <img [src]="c.image" [alt]="c.name" />
+          <h3>{{ c.name }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile: Slideshow (hidden on desktop) -->
+    <div class="mobile-only">
+      <div class="categories-slideshow">
+        <div
+          class="category-card"
+          *ngFor="let c of categoriesPreview; let i = index"
+          [class.active]="i === currentCategoryIndex"
+          (click)="openCategory(c.slug)"
+        >
+          <img [src]="c.image" [alt]="c.name" />
+          <h3>{{ c.name }}</h3>
+        </div>
+
+        <!-- Navigation Dots -->
+        <div class="category-dots">
+          <span
+            *ngFor="let c of categoriesPreview; let i = index"
+            [class.active]="i === currentCategoryIndex"
+            (click)="selectCategorySlide(i)"
+          ></span>
+        </div>
+      </div>
+    </div>
+
+    <button class="view-more" (click)="goToProjects()">
+      View Projects →
+    </button>
+  </section>
+
+</section>

@@ -1,0 +1,122 @@
+<div class="parallax-container">
+  
+  <!-- Progress Indicator -->
+  <div class="progress-container">
+    <div class="progress-track">
+      <div 
+        class="progress-fill" 
+        [style.width]="scrollProgress + '%'">
+      </div>
+    </div>
+    <div class="progress-label">
+      <span class="scene-indicator">
+        Scene {{ currentScene + 1 }} of {{ scenes.length }}
+      </span>
+      <span class="progress-percentage">{{ roundNumber(scrollProgress) }}%</span>
+    </div>
+  </div>
+
+  <!-- Scroll Hint -->
+  <div class="scroll-hint">
+    <div class="scroll-arrow"></div>
+    <span>Scroll to explore</span>
+  </div>
+
+  <!-- Each scene/chapter -->
+  <section 
+    *ngFor="let scene of scenes; let i = index; let isLast = last"
+    [id]="'scene-' + scene.id"
+    class="parallax-scene">
+    
+    <!-- Parallax Background Layer -->
+    <div class="parallax-bg">
+      <img [src]="scene.background" [alt]="scene.title">
+      <div class="overlay"></div>
+    </div>
+    
+    <!-- CSS Particles -->
+    <div class="particles-container">
+      <div 
+        class="particle" 
+        *ngFor="let item of [].constructor(20); let i = index"
+        [style.left]="(i * 5) + '%'"
+        [style.top]="(i * 4) + '%'"
+        [style.width]="(i % 4 + 1) + 'px'"
+        [style.height]="(i % 4 + 1) + 'px'"
+        [style.opacity]="0.1 + (i % 5) * 0.1"
+        [style.animationDuration]="(10 + (i % 10) * 2) + 's'"
+        [style.animationDelay]="(i % 5) + 's'">
+      </div>
+    </div>
+    
+    <!-- Equipment Hotspots -->
+    <div class="equipment-hotspots" *ngIf="scene.equipment">
+      <div 
+        class="hotspot"
+        *ngFor="let equipment of scene.equipment"
+        [style.left]="equipment.position.x + '%'"
+        [style.top]="equipment.position.y + '%'"
+        (click)="showEquipmentDetails(equipment)">
+        <div class="hotspot-icon">
+          <i class="fas {{ equipment.icon }}"></i>
+        </div>
+        <div class="hotspot-label">{{ equipment.name }}</div>
+      </div>
+    </div>
+    
+    <!-- Scene Content -->
+    <div class="scene-content">
+      <div class="content-wrapper">
+        
+        <div class="scene-number">{{ scene.number }}</div>
+        
+        <h2 class="scene-title">{{ scene.title }}</h2>
+        
+        <h3 class="scene-subtitle">{{ scene.subtitle }}</h3>
+        
+        <p class="scene-description">{{ scene.description }}</p>
+        
+        <button 
+          *ngIf="isLast"
+          class="cta-button"
+          routerLink="/quote">
+          Start Your Project
+          <i class="fas fa-arrow-right"></i>
+        </button>
+        
+      </div>
+    </div>
+    
+  </section>
+  
+  <!-- Equipment Modal -->
+  <div 
+    class="equipment-modal" 
+    *ngIf="selectedEquipment"
+    (click)="closeEquipmentModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <button class="close-button" (click)="closeEquipmentModal()">
+        <i class="fas fa-times"></i>
+      </button>
+      
+      <div class="equipment-header">
+        <div class="equipment-icon">
+          <i class="fas {{ selectedEquipment.icon }}"></i>
+        </div>
+        <h2>{{ selectedEquipment.name }}</h2>
+      </div>
+      
+      <p class="equipment-description">{{ selectedEquipment.description }}</p>
+      
+      <div class="equipment-specs">
+        <h3>Specifications</h3>
+        <ul>
+          <li *ngFor="let spec of selectedEquipment.specs">
+            <i class="fas fa-check"></i> {{ spec }}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+</div>
