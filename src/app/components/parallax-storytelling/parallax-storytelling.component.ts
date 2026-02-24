@@ -118,11 +118,17 @@ export class ParallaxStorytellingComponent implements OnInit, AfterViewInit, OnD
 
   ngOnInit(): void {
     gsap.registerPlugin(ScrollTrigger);
+    
+    // Configure ScrollTrigger for smooth performance
+    ScrollTrigger.config({
+      autoRefreshEvents: 'visibilitychange,DOMContentLoaded,load',
+      ignoreMobileResize: true
+    });
   }
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-      this.initParallaxAnimations();
+      this.initEnhancedParallax();
     }, 100);
   }
 
@@ -150,77 +156,120 @@ export class ParallaxStorytellingComponent implements OnInit, AfterViewInit, OnD
     return Math.round(num);
   }
 
-  initParallaxAnimations(): void {
+  initEnhancedParallax(): void {
     this.scenes.forEach((scene, index) => {
       const sceneId = `#scene-${scene.id}`;
       
+      // ============================================
+      // SMOOTH BACKGROUND PARALLAX
+      // ============================================
       gsap.to(`${sceneId} .parallax-bg`, {
-        y: () => window.innerHeight * 0.3,
+        yPercent: 30,
         ease: 'none',
         scrollTrigger: {
           trigger: sceneId,
           start: 'top bottom',
           end: 'bottom top',
-          scrub: true
+          scrub: 1.5, // Increased scrub for smoothness
+          invalidateOnRefresh: true
         }
       });
 
-      gsap.from(`${sceneId} .scene-content`, {
-        opacity: 0,
-        y: 100,
-        duration: 1,
-        scrollTrigger: {
-          trigger: sceneId,
-          start: 'top 80%',
-          end: 'top 50%',
-          scrub: 1
+      // ============================================
+      // SMOOTH CONTENT FADE
+      // ============================================
+      gsap.fromTo(`${sceneId} .scene-content`,
+        {
+          opacity: 0,
+          y: 100,
+          scale: 0.95
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 1.5,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: sceneId,
+            start: 'top 85%',
+            end: 'top 40%',
+            scrub: 1.5,
+            invalidateOnRefresh: true
+          }
         }
-      });
+      );
 
-      const timeline = gsap.timeline({
+      // ============================================
+      // STAGGERED TEXT ANIMATION (Improved)
+      // ============================================
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sceneId,
           start: 'top 70%',
-          toggleActions: 'play none none reverse'
+          end: 'top 30%',
+          toggleActions: 'play none none reverse',
+          once: false // Allow replay when scrolling back up
         }
       });
 
-      timeline
-        .from(`${sceneId} .scene-number`, {
+      tl.from(`${sceneId} .scene-number`, {
+        scale: 0,
+        rotation: -15,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'back.out(2)'
+      })
+      .from(`${sceneId} .scene-title`, {
+        y: 60,
+        opacity: 0,
+        duration: 1,
+        ease: 'power4.out'
+      }, '-=0.4')
+      .from(`${sceneId} .scene-subtitle`, {
+        y: 40,
+        opacity: 0,
+        duration: 0.9,
+        ease: 'power3.out'
+      }, '-=0.6')
+      .from(`${sceneId} .scene-description`, {
+        y: 30,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power2.out'
+      }, '-=0.6');
+
+      // ============================================
+      // EQUIPMENT HOTSPOTS (If present)
+      // ============================================
+      if (scene.equipment) {
+        gsap.from(`${sceneId} .hotspot`, {
           scale: 0,
           opacity: 0,
+          stagger: 0.15,
           duration: 0.6,
-          ease: 'back.out(1.7)'
-        })
-        .from(`${sceneId} .scene-title`, {
-          y: 50,
-          opacity: 0,
-          duration: 0.8,
-          ease: 'power3.out'
-        }, '-=0.3')
-        .from(`${sceneId} .scene-subtitle`, {
-          y: 30,
-          opacity: 0,
-          duration: 0.8,
-          ease: 'power3.out'
-        }, '-=0.5')
-        .from(`${sceneId} .scene-description`, {
-          y: 20,
-          opacity: 0,
-          duration: 0.8,
-          ease: 'power3.out'
-        }, '-=0.5');
+          ease: 'back.out(1.7)',
+          scrollTrigger: {
+            trigger: sceneId,
+            start: 'top 60%',
+            toggleActions: 'play none none reverse'
+          }
+        });
+      }
 
+      // ============================================
+      // CTA BUTTON (Last scene)
+      // ============================================
       if (index === this.scenes.length - 1) {
         gsap.from(`${sceneId} .cta-button`, {
           scale: 0,
           opacity: 0,
-          duration: 0.6,
-          delay: 0.8,
-          ease: 'back.out(1.7)',
+          y: 30,
+          duration: 0.8,
+          ease: 'elastic.out(1, 0.5)',
           scrollTrigger: {
             trigger: sceneId,
-            start: 'top 70%',
+            start: 'top 60%',
             toggleActions: 'play none none reverse'
           }
         });

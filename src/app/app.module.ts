@@ -8,6 +8,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './views/home/home.component';
 import { ParallaxStorytellingComponent } from './components/parallax-storytelling/parallax-storytelling.component';
+import { ParallaxHeroComponent } from './components/parallax-hero/parallax-hero.component';
+import { InViewDirective } from './core/directives/in-view.directive';
 
 // Shared / layout modules
 import { SharedModule } from './shared/shared.module';
@@ -26,7 +28,9 @@ import { AuthInterceptor } from './auth/auth.interceptor';
   declarations: [
     AppComponent,   // Only AppComponent is declared here
     HomeComponent,
-    ParallaxStorytellingComponent
+    ParallaxStorytellingComponent,
+    ParallaxHeroComponent,
+    InViewDirective
   ],
   imports: [
     BrowserModule,

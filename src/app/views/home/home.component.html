@@ -1,12 +1,14 @@
 <section>
 
-  <app-parallax-storytelling></app-parallax-storytelling>
+  <app-parallax-hero></app-parallax-hero>
 
+  <!-- Parallax Storytelling -->
+  <app-parallax-storytelling></app-parallax-storytelling>
 
   <!-- ============================================ -->
   <!-- ABOUT US SECTION -->
   <!-- ============================================ -->
-  <section class="about-us-sec">
+  <section class="about-us-sec" appInView>
     <div class="about-content">
       <div class="about-text">
         <h2>About Us</h2>
@@ -31,13 +33,10 @@
         <img src="assets/images/AboutUs_Placeholder.jpg" alt="About Domysuma Construction" />
       </div>
     </div>
-  </section>
-
-  
-  <!-- ============================================ -->
+  </section>  <!-- ============================================ -->
   <!-- WHY CHOOSE US -->
   <!-- ============================================ -->
-  <section class="services-cards-sec">
+  <section class="services-cards-sec" appInView>
     <h3 class="typing-title">
       Why Choose Domysuma <span class="typing-word">{{ currentWord }}</span><span class="cursor">|</span>
     </h3>
@@ -77,7 +76,7 @@
   <!-- ============================================ -->
   <!-- DESIGN PHILOSOPHY SECTION -->
   <!-- ============================================ -->
-  <section class="about-us-sec design-philosophy-sec">
+  <section class="about-us-sec design-philosophy-sec" appInView>
     <div class="about-content reversed">
       
       <!-- Image on the Left -->
@@ -113,7 +112,7 @@
   <!-- ============================================ -->
   <!-- PROJECTS PREVIEW SECTION -->
   <!-- ============================================ -->
-  <section class="projects-preview">
+  <section class="projects-preview" appInView>
     <h2>Our Projects</h2>
 
     <!-- Desktop: 4 cards in a row (hidden on mobile) -->

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { trigger, transition, query, style, animate } from '@angular/animations';
 import * as AOS from 'aos';
+import { SmoothScrollService } from './core/services/smooth-scroll.service';
 
 @Component({
   selector: 'app-root',
@@ -17,25 +18,28 @@ import * as AOS from 'aos';
     ])
   ]
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'domysuma';
 
-  ngOnInit(): void {
-    // Initialize AOS (Animate On Scroll)
-    AOS.init({
-      duration: 1000,        // Animation duration in milliseconds
-      easing: 'ease-out',    // Easing function
-      once: true,            // Whether animation should happen only once
-      mirror: false,         // Whether elements should animate out while scrolling past them
-      offset: 100,           // Offset (in px) from the original trigger point
-      delay: 0,              // Delay (in ms) before animation starts
-      anchorPlacement: 'top-bottom' // Defines which position of the element should trigger animation
-    });
+  constructor(private smoothScroll: SmoothScrollService) {}
 
-    // Refresh AOS on dynamic content changes (optional)
-    // Uncomment if you have dynamic content loading
-    // setTimeout(() => {
-    //   AOS.refresh();
-    // }, 500);
+  ngOnInit(): void {
+    // Initialize smooth scroll
+    this.smoothScroll.init();
+    
+    // Initialize AOS
+    AOS.init({
+      duration: 1000,
+      easing: 'ease-out-cubic',
+      once: true,
+      mirror: false,
+      offset: 100,
+      delay: 0,
+      anchorPlacement: 'top-bottom'
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.smoothScroll.destroy();
   }
 }

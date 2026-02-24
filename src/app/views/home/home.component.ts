@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -136,5 +136,25 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   goToProjects(): void {
     this.router.navigate(['/projects']);
+  }
+
+  @HostListener('mousemove', ['$event'])
+  onMouseMove(event: MouseEvent) {
+    // Magnetic effect on buttons
+    const buttons = document.querySelectorAll('.btn-primary, .btn-secondary, .cta-button');
+    
+    buttons.forEach((button) => {
+      const rect = button.getBoundingClientRect();
+      const x = event.clientX - rect.left - rect.width / 2;
+      const y = event.clientY - rect.top - rect.height / 2;
+      const distance = Math.sqrt(x * x + y * y);
+      
+      if (distance < 100) {
+        const strength = (100 - distance) / 100;
+        (button as HTMLElement).style.transform = `translate(${x * strength * 0.3}px, ${y * strength * 0.3}px)`;
+      } else {
+        (button as HTMLElement).style.transform = 'translate(0, 0)';
+      }
+    });
   }
 }

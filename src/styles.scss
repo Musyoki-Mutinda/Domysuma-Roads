@@ -226,4 +226,87 @@ body {
   transition: background 0.3s ease, color 0.3s ease;
 }
 
+// ============================================
+// SMOOTH SCROLLING FOUNDATION
+// ============================================
+
+html {
+  scroll-behavior: auto; // Let Lenis handle it
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+// ============================================
+// HARDWARE ACCELERATION FOR SMOOTH ANIMATIONS
+// ============================================
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Elements that will animate
+.parallax-bg,
+.parallax-layer,
+.scene-content,
+.story-bg,
+.hero-content {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+// ============================================
+// SMOOTH TRANSITIONS
+// ============================================
+
+a, button {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+// ============================================
+// PREVENT LAYOUT SHIFTS
+// ============================================
+
+img, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+// ============================================
+// LOADING STATE (Prevent jumps)
+// ============================================
+
+body.loading {
+  overflow: hidden;
+}
+
+// Fade in on page load
+body {
+  animation: fadeInPage 0.5s ease-in;
+}
+
+@keyframes fadeInPage {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
 

@@ -1,0 +1,92 @@
+<div class="hero-container" [style.transform]="'translateY(' + (scrollY * 0.5) + 'px)'">
+  
+  <!-- Parallax Background -->
+  <div class="parallax-bg">
+    <img src="assets/carousel/carousel_1.jpg" alt="Construction Background">
+    <div class="overlay"></div>
+  </div>
+  
+  <div class="hero-content">
+    <div class="content-wrapper">
+      
+      <!-- Construction Crane Building Title -->
+      <div class="crane-construction-container">
+        
+        <!-- Animated Crane -->
+        <div class="crane" 
+             [class.active]="isTyping"
+             [style.left]="cranePosition + '%'">
+          <div class="crane-arm">
+            <div class="crane-hook">
+              <i class="fas fa-grip-lines"></i>
+            </div>
+          </div>
+          <div class="crane-base">
+            <i class="fas fa-truck-monster"></i>
+          </div>
+        </div>
+        
+        <!-- Letters Being Built -->
+        <h1 class="construction-title">
+          <span 
+            *ngFor="let letter of displayedLetters; let i = index"
+            class="letter"
+            [style.animation-delay]="(i * 150) + 'ms'">
+            {{ letter === ' ' ? '&nbsp;' : letter }}
+          </span>
+        </h1>
+        
+      </div>
+      
+      <!-- Subtitle appears after typing completes -->
+      <p class="hero-subtitle" 
+         *ngIf="!isTyping"
+         [@fadeIn]>
+        Infrastructure That Lasts Generations
+      </p>
+      
+      <!-- CTA Buttons -->
+      <div class="hero-actions" 
+           *ngIf="!isTyping"
+           [@fadeIn]>
+        <a routerLink="/quote" class="btn-primary">
+          Request a Quote
+          <i class="fas fa-arrow-right"></i>
+        </a>
+        <a routerLink="/projects" class="btn-secondary">
+          View Our Work
+        </a>
+      </div>
+      
+      <!-- Trust Badges -->
+      <div class="trust-badges" 
+           *ngIf="!isTyping"
+           [@fadeIn]>
+        <div class="badge">
+          <i class="fas fa-certificate"></i>
+          <span>NCA Registered</span>
+        </div>
+        <div class="badge">
+          <i class="fas fa-shield-alt"></i>
+          <span>ISO Certified</span>
+        </div>
+        <div class="badge">
+          <i class="fas fa-award"></i>
+          <span>9 Years Excellence</span>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+  <!-- Scroll Indicator -->
+  <div class="scroll-indicator" 
+       *ngIf="!isTyping"
+       (click)="scrollToNextSection()">
+    <div class="mouse">
+      <div class="wheel"></div>
+    </div>
+    <p>Scroll to explore</p>
+  </div>
+  
+</div>
