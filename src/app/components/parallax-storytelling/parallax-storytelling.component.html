@@ -1,26 +1,10 @@
 <div class="parallax-container">
   
-  <!-- Progress Indicator -->
-  <div class="progress-container">
-    <div class="progress-track">
-      <div 
-        class="progress-fill" 
-        [style.width]="scrollProgress + '%'">
-      </div>
-    </div>
-    <div class="progress-label">
-      <span class="scene-indicator">
-        Scene {{ currentScene + 1 }} of {{ scenes.length }}
-      </span>
-      <span class="progress-percentage">{{ roundNumber(scrollProgress) }}%</span>
-    </div>
-  </div>
-
-  <!-- Scroll Hint -->
+  <!-- Scroll Hint 
   <div class="scroll-hint">
     <div class="scroll-arrow"></div>
     <span>Scroll to explore</span>
-  </div>
+  </div>-->
 
   <!-- Each scene/chapter -->
   <section 
@@ -31,7 +15,6 @@
     <!-- Parallax Background Layer -->
     <div class="parallax-bg">
       <img [src]="scene.background" [alt]="scene.title">
-      <div class="overlay"></div>
     </div>
     
     <!-- CSS Particles -->

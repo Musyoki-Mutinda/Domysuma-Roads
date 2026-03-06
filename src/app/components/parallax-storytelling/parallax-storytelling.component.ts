@@ -38,7 +38,7 @@ export class ParallaxStorytellingComponent implements OnInit, AfterViewInit, OnD
       title: 'Planning & Vision',
       subtitle: 'Every Great Project Starts Here',
       description: 'Our expert team transforms your ideas into detailed, actionable construction plans. From initial site analysis to 3D modeling, we ensure every detail is perfect before breaking ground.',
-      background: 'assets/carousel/carousel_1.jpg',
+      background: 'assets/images/archplanning.jpg',
       equipment: [
         {
           name: '3D Modeling Software',
@@ -62,7 +62,7 @@ export class ParallaxStorytellingComponent implements OnInit, AfterViewInit, OnD
       title: 'Foundation Excellence',
       subtitle: 'Building On Solid Ground',
       description: 'Heavy machinery and expert crews work in perfect harmony. We use cutting-edge equipment and proven techniques to create foundations that last generations.',
-      background: 'assets/carousel/carousel_2.jpg',
+      background: 'assets/images/cold.jpg',
       equipment: [
         {
           name: 'CAT 320D Excavator',
@@ -86,7 +86,7 @@ export class ParallaxStorytellingComponent implements OnInit, AfterViewInit, OnD
       title: 'Construction & Assembly',
       subtitle: 'Watch Your Vision Rise',
       description: 'Precision craftsmanship meets modern technology. Every beam, every bolt, every detail is executed with care. Our skilled workers bring your project to life.',
-      background: 'assets/carousel/carousel_3.jpg',
+      background: 'assets/images/builders.jpg',
       equipment: [
         {
           name: 'Tower Crane',
@@ -110,7 +110,7 @@ export class ParallaxStorytellingComponent implements OnInit, AfterViewInit, OnD
       title: 'Project Completion',
       subtitle: 'Excellence Delivered',
       description: 'Your dream becomes reality. We deliver on time, on budget, and beyond expectations. Each completed project stands as a testament to our commitment.',
-      background: 'assets/carousel/carousel_4.jpg'
+      background: 'assets/images/complete.jpg'
     }
   ];
 

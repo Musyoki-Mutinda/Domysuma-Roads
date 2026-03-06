@@ -34,7 +34,7 @@ export class AboutComponent implements AfterViewInit {
 
     const script = document.createElement('script');
     script.src =
-      'https://maps.googleapis.com/maps/api/js?key=AIzaSyBKSRofRSMWWGOfSVeO6JfAKj1_KfATndk';
+      'https://maps.googleapis.com/maps/api/js?key=AIzaSyAoyh__6xa853czafSSTO0slFE4aUG6z-s';
     script.async = true;
     script.defer = true;
 

@@ -34,6 +34,10 @@ const routes: Routes = [
       {
         path: 'saved-projects',
         loadChildren: () => import('./views/saved-projects/saved-projects.module').then(m => m.SavedProjectsModule)
+      },
+      {
+        path: 'quote',
+        loadChildren: () => import('./views/quote/quote.module').then(m => m.QuoteModule)
       }
     ]
   },

@@ -31,13 +31,23 @@ export class SavedProjectsService {
     );
   }
 
-  getSavedProjects(): Observable<any[]> {
-    return this.http.get<any>(`${this.apiUrl}/saved`).pipe(
-      map(response => {
-        // Handle ApiResponse format: {data: [...]} or direct array
-        const projects = response.data || response || [];
-        return Array.isArray(projects) ? projects : [];
-      })
-    );
-  }
+   getSavedProjects(): Observable<any[]> {
+     return this.http.get<any>(`${this.apiUrl}/saved`).pipe(
+       map(response => {
+         // Handle ApiResponse format: {data: [...]} or direct array
+         const projects = response.data || response || [];
+         return Array.isArray(projects) ? projects : [];
+       })
+     );
+   }
+
+   getProjectProgress(projectId: string): Observable<any[]> {
+     return this.http.get<any>(`${this.apiUrl}/${projectId}/progress`).pipe(
+       map(response => {
+         // Handle ApiResponse format: {data: [...]} or direct array
+         const updates = response.data || response || [];
+         return Array.isArray(updates) ? updates : [];
+       })
+     );
+   }
 }

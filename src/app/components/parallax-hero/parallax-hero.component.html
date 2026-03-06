@@ -1,9 +1,8 @@
-<div class="hero-container" [style.transform]="'translateY(' + (scrollY * 0.5) + 'px)'">
+<div class="hero-container" [style.transform]="'translateY(' + (scrollY * 0.25) + 'px)'">
   
   <!-- Parallax Background -->
   <div class="parallax-bg">
-    <img src="assets/carousel/carousel_1.jpg" alt="Construction Background">
-    <div class="overlay"></div>
+    <img src="assets/images/road.jpg" alt="Construction Background">
   </div>
   
   <div class="hero-content">
@@ -31,6 +30,8 @@
           <span 
             *ngFor="let letter of displayedLetters; let i = index"
             class="letter"
+            [class.white]="i >= whiteStartIndex && i < whiteEndIndex"
+            [class.yellow]="i >= yellowStartIndex && i < yellowEndIndex"
             [style.animation-delay]="(i * 150) + 'ms'">
             {{ letter === ' ' ? '&nbsp;' : letter }}
           </span>
@@ -79,14 +80,5 @@
     </div>
   </div>
   
-  <!-- Scroll Indicator -->
-  <div class="scroll-indicator" 
-       *ngIf="!isTyping"
-       (click)="scrollToNextSection()">
-    <div class="mouse">
-      <div class="wheel"></div>
-    </div>
-    <p>Scroll to explore</p>
-  </div>
   
 </div>

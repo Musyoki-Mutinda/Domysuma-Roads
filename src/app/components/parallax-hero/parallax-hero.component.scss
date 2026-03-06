@@ -29,19 +29,6 @@
     filter: brightness(0.4) saturate(1.1);
   }
   
-  .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.3) 0%,
-      rgba(0, 0, 0, 0.5) 50%,
-      rgba(0, 0, 0, 0.8) 100%
-    );
-  }
 }
 
 // Hero Content
@@ -154,9 +141,14 @@
     animation: dropLetter 0.5s forwards;
     color: #FF6B00;
     
-    // Add construction-themed effects
-    &:nth-child(even) {
-      color: #FFD700;
+    // White color for the ampersand
+    &.white {
+      color: white !important;
+    }
+    
+    // Yellow color for "Road Works"
+    &.yellow {
+      color: #FFD700 !important;
     }
     
     // Space character handling
@@ -276,61 +268,7 @@
 }
 
 // Scroll Indicator
-.scroll-indicator {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
-  z-index: 20;
-  
-  .mouse {
-    width: 24px;
-    height: 40px;
-    border: 2px solid rgba(255, 255, 255, 0.6);
-    border-radius: 20px;
-    position: relative;
-    
-    .wheel {
-      position: absolute;
-      top: 8px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 3px;
-      height: 6px;
-      background: rgba(255, 255, 255, 0.8);
-      border-radius: 2px;
-      animation: scrollWheel 1.5s infinite;
-    }
-  }
-  
-  p {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 0.875rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-  }
-}
 
-@keyframes scrollWheel {
-  0% {
-    opacity: 0;
-    transform: translateX(-50%) translateY(0);
-  }
-  50% {
-    opacity: 1;
-    transform: translateX(-50%) translateY(8px);
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(-50%) translateY(16px);
-  }
-}
 
 // Mobile adjustments
 @media (max-width: 768px) {

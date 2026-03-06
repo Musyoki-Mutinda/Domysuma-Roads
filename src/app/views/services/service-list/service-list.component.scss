@@ -3,21 +3,91 @@
 .services-sec {
   display: grid;
   position: relative;
-  background: #f7fbf2;
-  padding: 40px $layout-horizontal-padding;
+  background: url('/assets/images/service_bgp.jpg') center/cover no-repeat;
+  padding: 80px $layout-horizontal-padding;
+  overflow: hidden;
 
-  &::before {
-    content: '';
+  // Construction-themed background animation
+  .construction-background {
     position: absolute;
-    top: 0; 
+    top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: url('/assets/images/Services_Background3.jpg') no-repeat center center;
-    background-size: cover;
-    opacity: 0.25;
     z-index: 0;
     pointer-events: none;
+    opacity: 0.2;
+
+    .construction-line {
+      position: absolute;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #FF6B00, transparent);
+      animation: constructionLine 3s ease-in-out infinite;
+
+      &:nth-child(1) {
+        top: 20%;
+        width: 100%;
+        animation-delay: 0s;
+      }
+
+      &:nth-child(2) {
+        top: 50%;
+        width: 100%;
+        animation-delay: 1s;
+      }
+
+      &:nth-child(3) {
+        top: 80%;
+        width: 100%;
+        animation-delay: 2s;
+      }
+    }
+
+    .construction-particles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+
+      .particle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: #FF6B00;
+        border-radius: 50%;
+        opacity: 0;
+        animation: constructionParticle 4s ease-in-out infinite;
+
+        &:nth-child(1) {
+          top: 30%;
+          left: 20%;
+          animation-delay: 0s;
+        }
+
+        &:nth-child(2) {
+          top: 60%;
+          left: 80%;
+          animation-delay: 1s;
+        }
+
+        &:nth-child(3) {
+          top: 40%;
+          left: 60%;
+          animation-delay: 2s;
+        }
+
+        &:nth-child(4) {
+          top: 70%;
+          left: 30%;
+          animation-delay: 3s;
+        }
+
+        &:nth-child(5) {
+          top: 50%;
+          left: 40%;
+          animation-delay: 4s;
+        }
+      }
+    }
   }
 
   .section-header,
@@ -27,38 +97,68 @@
   }
 }
 
+@keyframes constructionLine {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(10px);
+    opacity: 0.7;
+  }
+}
+
+@keyframes constructionParticle {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0) translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1) translateY(-20px);
+  }
+}
+
 .section-header {
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 80px;
 
-  h2 {
+  .animated-title {
     color: #FF6B00;
     font-family: "Poppins", sans-serif;
-    font-weight: 600;
-    font-size: 42px;
-    margin-bottom: 10px;
+    font-weight: 700;
+    font-size: 48px;
+    margin-bottom: 20px;
+    position: relative;
+    display: inline-block;
   }
 
-  p {
+  .subtitle {
     font-size: 18px;
-    color: #333;
+    color: #0f0f0f;
     margin: 0 auto;
-    max-width: 100%;
+    max-width: 600px;
+    font-weight: 700;
   }
 }
 
 .services-cards-sec {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
   justify-items: stretch;
   align-items: stretch;
   grid-auto-rows: 1fr;
   width: 100%;
 
+  @include tablet {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
   @include mobile {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 25px;
     padding: 0 $layout-horizontal-padding-sm;
   }
 
@@ -70,86 +170,160 @@
     align-items: center;
     justify-content: flex-start;
     text-align: center;
-    padding: 24px;
+    padding: 40px 30px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 107, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
 
-    background:
-      linear-gradient(
-        180deg,
-        rgba(28, 117, 188, 0.12) 0%,
-        rgba(28, 117, 188, 0.03) 100%
-      ),
-      #ffffff;
-
-    border-radius: 16px;
-    border: 1px solid rgba(28, 117, 188, 0.2);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
-
-    transition:
-      transform 0.35s ease-out,
-      box-shadow 0.35s ease,
-      border-color 0.35s ease,
-      background 0.35s ease;
-
-    .icon-custom-with-bg {
-      font-size: 48px;
-      width: 90px;
-      height: 90px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 16px;
-      background: rgba(28, 117, 188, 0.08);
-      color: #FF6B00;
-      margin-bottom: 16px;
-      flex-shrink: 0;
+    .card-glow {
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 107, 0, 0.1) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
     }
 
-    div {
+    .card-icon-container {
+      position: relative;
+      margin-bottom: 25px;
+
+      .icon-custom-with-bg {
+        font-size: 56px;
+        width: 100px;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 20px;
+        background: rgba(255, 107, 0, 0.1);
+        color: #FF6B00;
+        margin-bottom: 16px;
+        flex-shrink: 0;
+        transition: all 0.4s ease;
+        position: relative;
+        z-index: 2;
+      }
+
+      .pulse-ring {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100px;
+        height: 100px;
+        border-radius: 20px;
+        border: 2px solid rgba(255, 107, 0, 0.3);
+        transform: translate(-50%, -50%);
+        animation: pulse 2s ease-in-out infinite;
+        z-index: 1;
+
+        &.secondary {
+          width: 120px;
+          height: 120px;
+          animation-delay: 1s;
+        }
+      }
+    }
+
+    .card-content {
       width: 100%;
       flex-grow: 1;
 
-      h4 {
+      .card-title {
         font-family: "Poppins", sans-serif;
-        font-weight: 500;
-        font-size: 28px;
-        margin-bottom: 8px;
+        font-weight: 600;
+        font-size: 24px;
+        margin-bottom: 15px;
         color: #FF6B00;
+        transition: transform 0.3s ease;
       }
 
-      p {
-        font-size: 16px;
-        line-height: 1.4;
-        color: #333;
-        text-align: justify;
-        margin: 0 auto;
-        max-width: 90%;
+      .card-description {
+        font-size: 15px;
+        line-height: 1.6;
+        color: #555;
+        margin-bottom: 20px;
+        min-height: 60px;
+      }
+
+      .key-features {
+        h5 {
+          font-size: 14px;
+          font-weight: 600;
+          color: #333;
+          margin-bottom: 10px;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+        }
+
+        ul {
+          list-style: none;
+          padding: 0;
+
+          li {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #666;
+            margin-bottom: 6px;
+            text-align: left;
+
+            i {
+              color: #28a745;
+              margin-right: 8px;
+              font-size: 11px;
+            }
+          }
+        }
       }
     }
 
     &:hover {
-      transform: scale(1.03);
-      box-shadow: 0 14px 34px rgba(28, 117, 188, 0.3);
-      border-color: rgba(28, 117, 188, 0.35);
-      background:
-        linear-gradient(
-          135deg,
-          rgba(28, 117, 188, 0.15) 0%,
-          rgba(28, 117, 188, 0.05) 100%
-        ),
-        #ffffff;
+      transform: translateY(-15px) scale(1.02);
+      box-shadow: 0 25px 60px rgba(255, 107, 0, 0.2);
+      border-color: rgba(255, 107, 0, 0.3);
+      background: rgba(255, 255, 255, 0.98);
+
+      .card-glow {
+        opacity: 1;
+      }
 
       .icon-custom-with-bg {
         background: #FF6B00;
         color: #ffffff;
         transform: scale(1.1);
       }
+
+      .card-title {
+        transform: translateY(-5px);
+      }
     }
 
     @include mobile {
       width: 100%;
       height: auto;
-      padding: 20px;
+      padding: 25px 20px;
     }
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.3;
   }
 }
 
@@ -158,44 +332,68 @@
    Add "dark" to <html> or <body> → <body class="dark">
    =========================================================== */
 .dark .services-sec {
-  background: transparent !important;
+  background: url('/assets/images/service_bgp.jpg') center/cover no-repeat !important;
 
-  &::before {
-    display: none;
+  .construction-background {
+    opacity: 0.15;
   }
 }
 
 .dark .section-header {
   background: transparent !important;
 
-  h2,
-  p {
+  .animated-title,
+  .subtitle {
     color: #ffffff;
   }
 }
 
 .dark .services-card {
-  background: transparent !important;
-  border: 1px solid rgba(255, 255, 255, 0.25) !important;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 
-  .icon-custom-with-bg {
-    background: rgba(255, 255, 255, 0.1) !important;
-    color: #ffffff !important;
+  .card-icon-container {
+    .icon-custom-with-bg {
+      background: rgba(255, 255, 255, 0.1) !important;
+      color: #ffffff !important;
+    }
+
+    .pulse-ring {
+      border-color: rgba(255, 107, 0, 0.4);
+    }
   }
 
-  h4,
-  p {
-    color: #ffffff !important;
+  .card-content {
+    .card-title {
+      color: #ffffff;
+    }
+
+    .card-description {
+      color: #ccc;
+    }
+
+    .key-features {
+      h5 {
+        color: #ffffff;
+      }
+
+      li {
+        color: #aaa;
+      }
+    }
   }
 }
 
 .dark .services-card:hover {
-  background: rgba(255, 255, 255, 0.05) !important;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+  background: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
 
-  .icon-custom-with-bg {
-    background: #ffffff !important;
-    color: #0f0f0f !important;
+  .card-icon-container {
+    .icon-custom-with-bg {
+      background: #ffffff !important;
+      color: #0f0f0f !important;
+    }
   }
 }

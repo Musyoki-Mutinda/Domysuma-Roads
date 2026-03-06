@@ -19,10 +19,16 @@ export class ParallaxHeroComponent implements OnInit {
   
   // Typing animation with crane
   displayedLetters: string[] = [];
-  private fullText = 'DOMYSUMA CONSTRUCTION & ROAD WORKS';
-  private typingSpeed = 150;
+  private fullText = 'Domysuma Construction & Road Works';
+  private typingSpeed = 210;
   cranePosition = 0;
   isTyping = false;
+  
+  // Define positions for color styling
+  whiteStartIndex = 'Domysuma Construction '.length;
+  whiteEndIndex = this.whiteStartIndex + '&'.length;
+  yellowStartIndex = 'Domysuma Construction & '.length;
+  yellowEndIndex = this.yellowStartIndex + 'Road Works'.length;
   
   ngOnInit() {
     setTimeout(() => {
@@ -50,14 +56,7 @@ export class ParallaxHeroComponent implements OnInit {
     }, this.typingSpeed);
   }
   
-  scrollToNextSection() {
-    const heroHeight = window.innerHeight;
-    window.scrollTo({
-      top: heroHeight,
-      behavior: 'smooth'
-    });
-  }
-
+  
   @HostListener('window:scroll', ['$event'])
   onScroll(event: Event) {
     this.scrollY = window.scrollY;

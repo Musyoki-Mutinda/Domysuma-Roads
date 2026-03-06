@@ -130,4 +130,8 @@ export class ProjectItemCardComponent implements OnInit {
       });
     }
   }
+
+  viewProgress(): void {
+    this.router.navigate(['/saved-projects/progress', this.projectData.id]);
+  }
 }

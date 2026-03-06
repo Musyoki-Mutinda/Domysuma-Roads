@@ -1,0 +1,78 @@
+<section class="project-progress-sec">
+  <section class="section-header">
+    <h2>{{ project?.title }} - Progress Timeline</h2>
+    <p>Track the progress of your project from start to finish.</p>
+  </section>
+
+  <div class="loading" *ngIf="loading">
+    <p>Loading project progress...</p>
+  </div>
+
+  <div class="error" *ngIf="error && !loading">
+    <p>{{ error }}</p>
+    <button class="btn-custom btn-custom-primary" (click)="loadProjectData()">Try Again</button>
+  </div>
+
+  <div class="project-progress-cont" *ngIf="!loading && !error">
+    <!-- Project Overview -->
+    <div class="project-overview">
+      <div class="overview-card">
+        <div class="current-progress">
+          <h3>Current Progress</h3>
+          <div class="progress-info">
+            <div class="progress-percentage">
+              {{ getCurrentProgress() }}%
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" 
+                   [style.width.%]="getCurrentProgress()"
+                   [ngClass]="getProgressClass(getCurrentProgress())">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress Timeline -->
+    <div class="progress-timeline">
+      <h3>Progress Updates</h3>
+      
+      <div *ngIf="progressUpdates.length === 0" class="no-updates">
+        <p>No progress updates available yet.</p>
+        <p>Check back soon for updates on your project.</p>
+      </div>
+
+      <div class="timeline-items">
+        <div *ngFor="let update of progressUpdates; let i = index" class="timeline-item">
+          <div class="timeline-marker"></div>
+          <div class="timeline-content">
+            <div class="update-header">
+              <div class="update-info">
+                <span class="completion-badge" [ngClass]="getProgressClass(update.completionPercentage)">
+                  {{ update.completionPercentage }}%
+                </span>
+                <span class="update-date">{{ update.updateDate | date: 'MMM d, yyyy HH:mm' }}</span>
+              </div>
+              <div class="update-number">Update {{ progressUpdates.length - i }}</div>
+            </div>
+
+            <div class="update-description">
+              {{ update.description }}
+            </div>
+
+            <div *ngIf="update.media && update.media.length > 0" class="update-media">
+              <h4>Photos</h4>
+              <div class="media-grid">
+                <div *ngFor="let media of update.media" class="media-item">
+                  <img [src]="media.fileUrl" [alt]="media.alt" class="media-image">
+                  <p class="media-title">{{ media.title }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
