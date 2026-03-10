@@ -11,7 +11,7 @@
       (click)="filterByCategory(category)">
       {{ category }}
     </button>
-    <button (click)="testRSSFeed()" class="test-button">Test RSS Feed</button>
+    <!--<button (click)="testRSSFeed()" class="test-button">Test RSS Feed</button> -->
   </div>
 
   <div class="blog-content-wrapper">
@@ -19,12 +19,12 @@
     <div class="blog-grid" *ngIf="!loading && blogPosts.length">
       <div class="blog-card" *ngFor="let post of blogPosts">
         <div class="image-container">
-          <!-- onerror fallback: if image fails to load, swap to placeholder -->
           <img
-            [src]="post.image"
+            [src]="post.image || PLACEHOLDER_SVG"
             [attr.data-original-src]="post.image"
             [alt]="post.title"
             (error)="onImageError($event)"
+            loading="lazy"
           />
         </div>
 
@@ -52,10 +52,11 @@
       <div class="sidebar-post" *ngFor="let post of rssPosts | slice:0:5">
         <div class="sidebar-image">
           <img
-            [src]="post.image"
+            [src]="post.image || PLACEHOLDER_SVG"
             [attr.data-original-src]="post.image"
             [alt]="post.title"
             (error)="onImageError($event)"
+            loading="lazy"
           />
         </div>
         <div class="sidebar-content">

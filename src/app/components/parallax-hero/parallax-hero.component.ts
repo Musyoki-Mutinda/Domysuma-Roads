@@ -19,16 +19,16 @@ export class ParallaxHeroComponent implements OnInit {
   
   // Typing animation with crane
   displayedLetters: string[] = [];
-  private fullText = 'Domysuma Construction & Road Works';
+  private fullText = 'DOMYSUMA BUILDING & ROAD WORKS \nCONSTRUCTION COMPANY LTD';
   private typingSpeed = 210;
   cranePosition = 0;
   isTyping = false;
   
   // Define positions for color styling
-  whiteStartIndex = 'Domysuma Construction '.length;
+  whiteStartIndex = 'DOMYSUMA BUILDING '.length;
   whiteEndIndex = this.whiteStartIndex + '&'.length;
-  yellowStartIndex = 'Domysuma Construction & '.length;
-  yellowEndIndex = this.yellowStartIndex + 'Road Works'.length;
+  yellowStartIndex = 'DOMYSUMA BUILDING & ROAD WORKS \n'.length;
+  yellowEndIndex = this.yellowStartIndex + 'CONSTRUCTION COMPANY LTD'.length;
   
   ngOnInit() {
     setTimeout(() => {

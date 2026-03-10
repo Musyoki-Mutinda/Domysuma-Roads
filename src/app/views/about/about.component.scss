@@ -29,7 +29,7 @@
   /* ---------- SECTIONS ---------- */
   .about-section {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: space-between;
     gap: 40px;
     margin-bottom: 100px;
@@ -80,11 +80,11 @@
       flex: 1;
       display: flex;
       justify-content: center;
+      min-height: 100%;
 
       img {
         width: 100%;
-        max-width: 350px;
-        height: 200px;
+        height: 100%;
         border-radius: 10px;
         box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
         object-fit: cover;

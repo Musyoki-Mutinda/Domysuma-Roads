@@ -32,8 +32,8 @@
             class="letter"
             [class.white]="i >= whiteStartIndex && i < whiteEndIndex"
             [class.yellow]="i >= yellowStartIndex && i < yellowEndIndex"
-            [style.animation-delay]="(i * 150) + 'ms'">
-            {{ letter === ' ' ? '&nbsp;' : letter }}
+            [style.animation-delay]="(i * 150) + 'ms'"
+            [innerHTML]="letter === '\n' ? '<br>' : (letter === ' ' ? '&nbsp;' : letter)">
           </span>
         </h1>
         
