@@ -32,6 +32,14 @@ const routes: Routes = [
         loadChildren: () => import('./views/services/services.module').then(m => m.ServicesModule)
       },
       {
+        path: 'equipment',
+        loadChildren: () => import('./views/equipment/equipment.module').then(m => m.EquipmentModule)
+      },
+      {
+        path: 'careers',
+        loadChildren: () => import('./views/careers/careers.module').then(m => m.CareersModule)
+      },
+      {
         path: 'saved-projects',
         loadChildren: () => import('./views/saved-projects/saved-projects.module').then(m => m.SavedProjectsModule)
       },

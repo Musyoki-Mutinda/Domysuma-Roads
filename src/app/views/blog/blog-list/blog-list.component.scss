@@ -40,9 +40,9 @@
       transition: all 0.3s ease;
 
       &:hover, &.active {
-        background-color: #0066cc;
+        background-color: #FF8C00;
         color: #fff;
-        border-color: #0066cc;
+        border-color: #FF8C00;
         transform: translateY(-2px);
       }
     }
@@ -101,7 +101,7 @@
           margin-bottom: 10px;
 
           span {
-            color: #0066cc;
+            color: #FF8C00;
           }
         }
 
@@ -124,13 +124,13 @@
           display: inline-flex;
           align-items: center;
           gap: 8px;
-          color: #0066cc;
+          color: #FF8C00;
           text-decoration: none;
           font-weight: 500;
           transition: color 0.3s ease;
 
           &:hover {
-            color: #0055b3;
+            color: #FF8C00;
           }
         }
       }
@@ -200,7 +200,7 @@
             transition: color 0.3s ease;
 
             &:hover {
-              color: #0066cc;
+              color: #FF8C00;
             }
           }
 

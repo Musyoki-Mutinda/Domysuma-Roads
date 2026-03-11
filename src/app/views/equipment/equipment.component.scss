@@ -1,0 +1,140 @@
+.equipment-page {
+  .equipment-hero {
+    background: linear-gradient(135deg, #667eea 0%, #FF6B00 100%);
+    color: white;
+    padding: 100px 20px;
+    text-align: center;
+
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+
+      h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      p {
+        font-size: 1.2rem;
+        line-height: 1.6;
+        opacity: 0.9;
+      }
+    }
+  }
+
+  .equipment-details {
+    padding: 80px 20px;
+    background-color: #f8f9fa;
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+
+      .section-intro {
+        text-align: center;
+        margin-bottom: 60px;
+
+        p {
+          font-size: 1.1rem;
+          color: #666;
+          max-width: 700px;
+          margin: 0 auto;
+        }
+      }
+
+      .equipment-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin-bottom: 60px;
+      }
+
+      .equipment-item {
+        background: white;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        border: 1px solid #e0e0e0;
+
+        &:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .equipment-icon {
+          width: 60px;
+          height: 60px;
+          background: linear-gradient(135deg, #667eea 0%, #FF6B00 100%);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 20px;
+
+          i {
+            color: white;
+            font-size: 1.5rem;
+          }
+        }
+
+        .equipment-content {
+          h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+          }
+
+          p {
+            color: #666;
+            line-height: 1.6;
+          }
+        }
+      }
+
+      .section-conclusion {
+        text-align: center;
+
+        p {
+          font-size: 1.1rem;
+          color: #666;
+          max-width: 700px;
+          margin: 0 auto;
+          font-style: italic;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .equipment-page {
+    .equipment-hero {
+      padding: 60px 20px;
+
+      .hero-content {
+        h1 {
+          font-size: 2rem;
+        }
+
+        p {
+          font-size: 1rem;
+        }
+      }
+    }
+
+    .equipment-details {
+      padding: 60px 20px;
+
+      .container {
+        .equipment-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    }
+  }
+}

@@ -20,7 +20,7 @@ export class ParallaxHeroComponent implements OnInit {
   // Typing animation with crane
   displayedLetters: string[] = [];
   private fullText = 'DOMYSUMA BUILDING & ROAD WORKS \nCONSTRUCTION COMPANY LTD';
-  private typingSpeed = 210;
+  private typingSpeed = 150;
   cranePosition = 0;
   isTyping = false;
   
