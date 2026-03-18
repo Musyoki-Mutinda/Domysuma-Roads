@@ -9,15 +9,11 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './views/home/home.component';
 import { ParallaxStorytellingComponent } from './components/parallax-storytelling/parallax-storytelling.component';
 import { ParallaxHeroComponent } from './components/parallax-hero/parallax-hero.component';
-import { InViewDirective } from './core/directives/in-view.directive';
 
 // Shared / layout modules
 import { SharedModule } from './shared/shared.module';
 import { LayoutModule } from './views/layout/layout.module';
 import { AboutModule } from './views/about/about.module'
-
-// Gallery
-import { GalleryModule } from 'ng-gallery';
 
 // Auth
 import { AuthService } from './auth/auth.service';
@@ -29,16 +25,12 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     AppComponent,   // Only AppComponent is declared here
     HomeComponent,
     ParallaxStorytellingComponent,
-    ParallaxHeroComponent,
-    InViewDirective
+    ParallaxHeroComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-
-    // Third-party
-    GalleryModule,
 
     // Routing
     AppRoutingModule,

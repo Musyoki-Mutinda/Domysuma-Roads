@@ -1,6 +1,6 @@
 <section class="careers-page">
   <!-- Hero Section -->
-  <section class="careers-hero">
+  <section class="careers-hero fade-up" appInView>
     <div class="hero-content">
       <h1>Join Our Team</h1>
       <p>Domysuma Construction & Road Works is always looking for skilled professionals who are passionate about construction and infrastructure development.</p>
@@ -8,82 +8,36 @@
   </section>
 
   <!-- Careers Details Section -->
-  <section class="careers-details">
-    <div class="container">
-      <div class="section-intro">
-        <p>We believe in building a strong team that values professionalism, safety, and teamwork.</p>
+  <section class="careers-details fade-up" appInView>
+    <div class="careers-slideshow-container">
+      <div class="slideshow">
+        <div 
+          *ngFor="let image of careerImages; let i = index"
+          class="slideshow-image"
+          [class.active]="i === currentImageIndex"
+          [style.backgroundImage]="'url(' + image + ')'"
+        ></div>
+        
+        <div class="slideshow-overlay">
+          <button class="careers-button" (click)="navigateToCareers()">
+            Click here to see available jobs
+          </button>
+        </div>
       </div>
-
-      <div class="careers-info">
-        <div class="careers-text">
-          <p>If you are interested in working with us, please send your application and CV to our email address.</p>
-          
-          <div class="email-contact">
-            <i class="fas fa-envelope"></i>
-            <a href="mailto:domysumaconstructionandroads&#64;gmail.com">domysumaconstructionandroads&#64;gmail.com</a>
-          </div>
-        </div>
-
-        <div class="opportunities">
-          <h3>Opportunities may include:</h3>
-          <div class="opportunities-grid">
-            <div class="opportunity-item">
-              <div class="opportunity-icon">
-                <i class="fas fa-user-tie"></i>
-              </div>
-              <div class="opportunity-content">
-                <h4>Civil Engineers</h4>
-                <p>Design, plan, and oversee construction projects ensuring compliance with safety and quality standards.</p>
-              </div>
-            </div>
-
-            <div class="opportunity-item">
-              <div class="opportunity-icon">
-                <i class="fas fa-hard-hat"></i>
-              </div>
-              <div class="opportunity-content">
-                <h4>Site Supervisors</h4>
-                <p>Manage on-site operations, coordinate with teams, and ensure projects are completed on time and within budget.</p>
-              </div>
-            </div>
-
-            <div class="opportunity-item">
-              <div class="opportunity-icon">
-                <i class="fas fa-tools"></i>
-              </div>
-              <div class="opportunity-content">
-                <h4>Machine Operators</h4>
-                <p>Operate and maintain heavy construction equipment including excavators, graders, and dump trucks.</p>
-              </div>
-            </div>
-
-            <div class="opportunity-item">
-              <div class="opportunity-icon">
-                <i class="fas fa-wrench"></i>
-              </div>
-              <div class="opportunity-content">
-                <h4>Construction Technicians</h4>
-                <p>Provide technical support, perform equipment maintenance, and ensure construction processes run smoothly.</p>
-              </div>
-            </div>
-
-            <div class="opportunity-item">
-              <div class="opportunity-icon">
-                <i class="fas fa-briefcase"></i>
-              </div>
-              <div class="opportunity-content">
-                <h4>Administrative Staff</h4>
-                <p>Support daily operations with administrative tasks, documentation, and project coordination.</p>
-              </div>
-            </div>
-          </div>
-        </div>
+      
+      <div class="slideshow-indicators">
+        <span 
+          *ngFor="let image of careerImages; let i = index"
+          class="indicator"
+          [class.active]="i === currentImageIndex"
+          (click)="goToImage(i)"
+        ></span>
       </div>
     </div>
   </section>
 
   <!-- Values Section -->
-  <section class="careers-values">
+  <section class="careers-values fade-up" appInView>
     <div class="container">
       <h2>Our Team Values</h2>
       <div class="values-grid">

@@ -262,14 +262,14 @@ body.dark-mode .saved-dropdown .saved-btn {
 }
 
 /* =====================================================
-   HEADER BOTTOM SECTION
-   ===================================================== */
+    HEADER BOTTOM SECTION
+    ===================================================== */
 .header-bottom-sec {
   border-top: 0.5px solid #dadada;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   padding: 10px $layout-horizontal-padding;
   position: relative;
 
@@ -288,7 +288,7 @@ body.dark-mode .saved-dropdown .saved-btn {
     border: none;
     cursor: pointer;
     padding: 0;
-    margin-left: 15px;
+    margin-left: auto;
     z-index: 1100;
     position: relative;
 
@@ -319,12 +319,12 @@ body.dark-mode .saved-dropdown .saved-btn {
     list-style-type: none;
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 5px;
-    margin-left: auto;
+    flex-wrap: nowrap;
+    gap: 24px;
+    margin-left: 30px;
 
     > li {
-      padding: 10px 20px;
+      padding: 10px 5px;
       border-radius: 5px;
       cursor: pointer;
       transition: all 0.2s ease-in-out;
@@ -338,7 +338,7 @@ body.dark-mode .saved-dropdown .saved-btn {
       background: #FF6B00;
       color: #fff;
       border-radius: 5px;
-      padding: 10px 20px;
+      padding: 20px 20px;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.2s ease-in-out;

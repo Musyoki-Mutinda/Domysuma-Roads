@@ -11,8 +11,8 @@ import { BreadCrumbComponent } from './widgets/bread-crumb/bread-crumb.component
 import { ProjectItemCardComponent } from './widgets/project-item-card/project-item-card.component';
 import { GalleryComponent } from './widgets/gallery/gallery.component';
 import { LoginModalComponent } from './components/login-modal/login-modal.component';
-import { GalleryModule } from "ng-gallery";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InViewDirective } from '../core/directives/in-view.directive';
 
 const components = [
   HeaderComponent,
@@ -24,13 +24,12 @@ const components = [
   GalleryComponent,
   ContactFormPopupComponent,
   LoginModalComponent,
-  
+  InViewDirective
 ];
 
 const modules = [
-  CommonModule,            // <-- added here
+  CommonModule,
   RouterModule,
-  GalleryModule,
   FormsModule,
   ReactiveFormsModule
 ];
@@ -44,7 +43,7 @@ const modules = [
   ],
   exports: [
     ...components,
-    ...modules   // <-- CommonModule included now
+    ...modules
   ]
 })
 export class SharedModule { }

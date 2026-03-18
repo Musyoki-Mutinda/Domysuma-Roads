@@ -1,16 +1,43 @@
 <section class="testimonials-sec">
   <div class="container">
-    <h2>What Our Users Say</h2>
-
-    <div class="testimonials-grid">
-      <div class="testimonial-card" *ngFor="let t of testimonials">
-        <img [src]="t.image" [alt]="t.name" />
-        <p class="content">"{{ t.content }}"</p>
-        <div class="author">
-          <h3>{{ t.name }}</h3>
-          <span>{{ t.role }}</span>
+    <div class="testimonials-header">
+      <h2>What our users say</h2>
+    </div>
+    <div class="testimonials-container">
+      <button class="nav-arrow prev-arrow" (click)="previousCard()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <div class="testimonials-carousel" #carousel>
+        <div 
+          class="testimonial-card" 
+          *ngFor="let t of testimonials; let i = index"
+          [ngClass]="getCardClass(i)"
+        >
+          <div class="star-rating">
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+          </div>
+          <p class="content">"{{ t.content }}"</p>
+          <div class="author">
+            <img [src]="t.image" [alt]="t.name" class="author-avatar" />
+            <span class="author-name">{{ t.name }}</span>
+          </div>
+          <div class="posted-on">
+            <img src="assets/icons/google.svg" alt="Google" class="google-icon" />
+            <span>Posted on Google</span>
+          </div>
         </div>
       </div>
+      <button class="nav-arrow next-arrow" (click)="nextCard()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
     </div>
   </div>
 </section>

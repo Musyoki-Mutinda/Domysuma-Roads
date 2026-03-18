@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AboutComponent } from './about.component';
 import { TestimonialsComponent } from './testimonials/testimonials.component';
+import { SharedModule } from '../../shared/shared.module';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { TestimonialsComponent } from './testimonials/testimonials.component';
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    SharedModule
   ],
   exports: [
     AboutComponent,

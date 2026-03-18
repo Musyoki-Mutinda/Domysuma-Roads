@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 
 interface Testimonial {
   id: number;
@@ -14,6 +14,8 @@ interface Testimonial {
   styleUrls: ['./testimonials.component.scss']
 })
 export class TestimonialsComponent {
+  @ViewChild('carousel', { static: true }) carousel!: ElementRef;
+
   testimonials: Testimonial[] = [
     {
       id: 1,
@@ -72,4 +74,28 @@ export class TestimonialsComponent {
       content: 'They are so professional and at the same time good at their work. It`s the right place to go if you`re looking forward to professional and superb work.'
     }
   ];
+
+  activeIndex = 0;
+
+  getCardClass(index: number): string {
+    if (index === this.activeIndex) {
+      return 'card-active';
+    } else if (index === this.activeIndex - 1 || index === this.activeIndex + 1) {
+      return 'card-behind-1';
+    } else {
+      return 'card-behind-2';
+    }
+  }
+
+  previousCard() {
+    if (this.activeIndex > 0) {
+      this.activeIndex--;
+    }
+  }
+
+  nextCard() {
+    if (this.activeIndex < this.testimonials.length - 1) {
+      this.activeIndex++;
+    }
+  }
 }
