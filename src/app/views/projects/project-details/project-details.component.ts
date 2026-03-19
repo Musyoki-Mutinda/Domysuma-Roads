@@ -7,6 +7,7 @@ import { SavedPlansService } from '../../../core/services/saved-plans.service';
 import { SavedProjectsService } from '../../../core/services/saved-projects.service';
 import { UserService } from '../../../core/services/user.service';
 import { ProjectService } from '../../../core/services/project.service';
+import { ProjectsService, ProjectProgress } from '../projects.service';
 
 @Component({
   selector: 'app-project-details',
@@ -23,6 +24,8 @@ export class ProjectDetailsComponent implements OnInit {
   selectedPlan: any = null;
 
   similarPlans: any[] = [];
+  progressUpdates: ProjectProgress[] = [];
+  isLoadingProgress = false;
 
   // Category mapping for routing
   private categoryMap: { [key: string]: string } = {
@@ -66,8 +69,50 @@ export class ProjectDetailsComponent implements OnInit {
     private savedPlansService: SavedPlansService,
     private savedProjectsService: SavedProjectsService,
     private userService: UserService,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private projectsService: ProjectsService
   ) {}
+
+  loadProgressUpdates(projectId: number) {
+    this.isLoadingProgress = true;
+    this.projectsService.getProjectProgress(projectId.toString()).subscribe(
+      (updates: ProjectProgress[]) => {
+        this.progressUpdates = updates;
+        this.isLoadingProgress = false;
+      },
+      (error) => {
+        console.error('Error loading project progress:', error);
+        this.isLoadingProgress = false;
+      }
+    );
+  }
+
+  getStatusColor(status: string): string {
+    switch (status) {
+      case 'Planning':
+        return 'status-planning';
+      case 'Design':
+        return 'status-design';
+      case 'Construction':
+        return 'status-construction';
+      case 'Completion':
+        return 'status-completion';
+      default:
+        return 'status-planning';
+    }
+  }
+
+  getProgressBarColor(percentage: number): string {
+    if (percentage < 30) {
+      return 'progress-bar-warning';
+    } else if (percentage < 70) {
+      return 'progress-bar-info';
+    } else if (percentage < 100) {
+      return 'progress-bar-success';
+    } else {
+      return 'progress-bar-primary';
+    }
+  }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -108,6 +153,9 @@ export class ProjectDetailsComponent implements OnInit {
             clientType: project.clientType || project.client_type || project.client || 'Private',
             scope: scope
           };
+
+          // Load progress updates
+          this.loadProgressUpdates(project.id);
 
           // Check if project is saved
           if (this.isLoggedIn && this.project.id) {

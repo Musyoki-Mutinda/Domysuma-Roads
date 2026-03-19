@@ -11,9 +11,9 @@ interface Environment {
 
 export const environment: Environment = {
   production: false,
-  apiBaseUrl: 'https://api.domysumaarchitects.co.ke',
-  clientUrl: 'https://domysumaarchitects.co.ke',
-  adminUrl: 'https://admin.domysumaarchitects.co.ke'
+  apiBaseUrl: 'http://localhost:8200',
+  clientUrl: 'http://localhost:4200',
+  adminUrl: 'http://localhost:4300'
 };
 
 /*

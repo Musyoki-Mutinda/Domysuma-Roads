@@ -1,73 +1,35 @@
 <section class="careers-page">
+
   <!-- Hero Section -->
   <section class="careers-hero fade-up" appInView>
-    <div class="hero-content">
-      <h1>Join Our Team</h1>
-      <p>Domysuma Construction & Road Works is always looking for skilled professionals who are passionate about construction and infrastructure development.</p>
+    <!-- Background Slideshow -->
+    <div class="bg-slideshow">
+      <div
+        *ngFor="let image of careerImages; let i = index"
+        class="bg-image"
+        [class.active]="i === bgImageIndex"
+        [style.backgroundImage]="'url(' + image + ')'"
+      ></div>
     </div>
+
+    <div class="hero-left" style="position: relative; z-index: 2;">
+      <span class="hero-tagline">— Join Our Team —</span>
+      <h1>
+        Build with Us<br>
+        at <span class="highlight">Domysuma</span>
+      </h1>
+      <p class="hero-sub">We are the people who build & deliver.</p>
+
+      <div class="hero-actions">
+        <!--<button class="btn-primary" routerLink="/about">About Us</button>-->
+        <button class="btn-outline" (click)="navigateToCareers()">Vacancies</button>
+      </div>
+
+      <!--<div class="hot-vacancies">
+        <strong>Hot vacancies:</strong>
+        <span>Site Engineer, Project Manager, Quantity Surveyor, Safety Officer</span>
+      </div>-->
+    </div> 
   </section>
 
-  <!-- Careers Details Section -->
-  <section class="careers-details fade-up" appInView>
-    <div class="careers-slideshow-container">
-      <div class="slideshow">
-        <div 
-          *ngFor="let image of careerImages; let i = index"
-          class="slideshow-image"
-          [class.active]="i === currentImageIndex"
-          [style.backgroundImage]="'url(' + image + ')'"
-        ></div>
-        
-        <div class="slideshow-overlay">
-          <button class="careers-button" (click)="navigateToCareers()">
-            Click here to see available jobs
-          </button>
-        </div>
-      </div>
-      
-      <div class="slideshow-indicators">
-        <span 
-          *ngFor="let image of careerImages; let i = index"
-          class="indicator"
-          [class.active]="i === currentImageIndex"
-          (click)="goToImage(i)"
-        ></span>
-      </div>
-    </div>
-  </section>
-
-  <!-- Values Section -->
-  <section class="careers-values fade-up" appInView>
-    <div class="container">
-      <h2>Our Team Values</h2>
-      <div class="values-grid">
-        <div class="value-item">
-          <div class="value-icon">
-            <i class="fas fa-award"></i>
-          </div>
-          <h3>Professionalism</h3>
-          <p>We maintain high standards of excellence in all our work and interactions.</p>
-        </div>
-
-        <div class="value-item">
-          <div class="value-icon">
-            <i class="fas fa-shield-alt"></i>
-          </div>
-          <h3>Safety</h3>
-          <p>We prioritize the safety and well-being of all team members and project stakeholders.</p>
-        </div>
-
-        <div class="value-item">
-          <div class="value-icon">
-            <i class="fas fa-users"></i>
-          </div>
-          <h3>Teamwork</h3>
-          <p>We collaborate effectively across all levels to achieve common goals and deliver exceptional results.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  
 </section>

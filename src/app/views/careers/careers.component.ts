@@ -7,48 +7,42 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 })
 export class CareersComponent implements OnInit, OnDestroy {
   careerImages: string[] = [
-    'assets/careers/Careers1.jpg',
+    'assets/careers/Careers7.jpg',
     'assets/careers/Careers2.jpg',
     'assets/careers/Careers3.jpg',
     'assets/careers/Careers4.jpg',
     'assets/careers/Careers5.jpg',
     'assets/careers/Careers6.jpg',
-    'assets/careers/Careers7.jpg'
+    'assets/careers/Careers1.jpg'
   ];
-  
-  currentImageIndex: number = 0;
-  slideInterval: any;
 
-  ngOnInit() {
-    this.startSlideshow();
+  // Background slideshow index
+  bgImageIndex: number = 0;
+
+  bgSlideInterval: any;
+
+  ngOnInit(): void {
+    this.startBackgroundSlideshow();
   }
 
-  ngOnDestroy() {
-    if (this.slideInterval) {
-      clearInterval(this.slideInterval);
+  ngOnDestroy(): void {
+    if (this.bgSlideInterval) {
+      clearInterval(this.bgSlideInterval);
     }
   }
 
-  startSlideshow() {
-    this.slideInterval = setInterval(() => {
-      this.nextImage();
-    }, 4000); // Change image every 4 seconds
+  startBackgroundSlideshow(): void {
+    this.bgSlideInterval = setInterval(() => {
+      this.nextBackgroundImage();
+    }, 5000);
   }
 
-  nextImage() {
-    this.currentImageIndex = (this.currentImageIndex + 1) % this.careerImages.length;
+  nextBackgroundImage(): void {
+    const total = this.careerImages.length;
+    this.bgImageIndex = (this.bgImageIndex + 1) % total;
   }
 
-  goToImage(index: number) {
-    this.currentImageIndex = index;
-    // Restart the interval to ensure consistent timing after manual change
-    if (this.slideInterval) {
-      clearInterval(this.slideInterval);
-    }
-    this.startSlideshow();
-  }
-
-  navigateToCareers() {
+  navigateToCareers(): void {
     window.open('https://domysumaarchitects.co.ke/careers', '_blank');
   }
 }

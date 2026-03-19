@@ -1,6 +1,12 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
 
+interface LetterItem {
+  char: string;
+  visible: boolean;
+  color: 'orange' | 'white' | 'yellow';
+}
+
 @Component({
   selector: 'app-parallax-hero',
   templateUrl: './parallax-hero.component.html',
@@ -16,49 +22,106 @@ import { trigger, transition, style, animate } from '@angular/animations';
 })
 export class ParallaxHeroComponent implements OnInit {
   scrollY = 0;
-  
-  // Typing animation with crane
-  displayedLetters: string[] = [];
-  private fullText = 'DOMYSUMA BUILDING & ROAD WORKS \nCONSTRUCTION COMPANY LTD';
-  private typingSpeed = 150;
-  cranePosition = 0;
-  isTyping = false;
-  
-  // Define positions for color styling
-  whiteStartIndex = 'DOMYSUMA BUILDING '.length;
-  whiteEndIndex = this.whiteStartIndex + '&'.length;
-  yellowStartIndex = 'DOMYSUMA BUILDING & ROAD WORKS \n'.length;
-  yellowEndIndex = this.yellowStartIndex + 'CONSTRUCTION COMPANY LTD'.length;
-  
-  ngOnInit() {
-    setTimeout(() => {
-      this.startCraneTyping();
-    }, 500);
+
+  // Row 1: "DOMYSUMA BUILDING & ROAD WORKS"
+  // orange: everything except "&" which is white
+  row1Letters: LetterItem[] = [];
+  private row1Text = 'DOMYSUMA BUILDING & ROAD WORKS';
+
+  // Row 2: "CONSTRUCTION COMPANY LTD" — all yellow
+  row2Letters: LetterItem[] = [];
+  private row2Text = 'CONSTRUCTION COMPANY LTD';
+
+  // Truck state
+  isTruckActive = false;
+  isTipping = false;
+
+  // Roller state
+  isRollerActive = false;
+
+  // Done
+  animationComplete = false;
+
+  ngOnInit(): void {
+    this.buildLetterArrays();
+    setTimeout(() => this.startTipperTruck(), 600);
   }
-  
-  startCraneTyping(): void {
-    this.isTyping = true;
+
+  private buildLetterArrays(): void {
+    const ampIndex = this.row1Text.indexOf('&');
+    this.row1Letters = this.row1Text.split('').map((char, i) => ({
+      char,
+      visible: false,
+      color: i === ampIndex ? 'white' : 'orange'
+    }));
+
+    this.row2Letters = this.row2Text.split('').map(char => ({
+      char,
+      visible: false,
+      color: 'yellow' as const
+    }));
+  }
+
+  // ─── PHASE 1: Tipper Truck drives right, letters appear behind it ──────────
+
+  private startTipperTruck(): void {
+    this.isTruckActive = true;
     let charIndex = 0;
-    
-    const typeInterval = setInterval(() => {
-      if (charIndex < this.fullText.length) {
-        const char = this.fullText.charAt(charIndex);
-        this.displayedLetters.push(char);
-        
-        // Calculate crane position (percentage)
-        this.cranePosition = ((charIndex + 1) / this.fullText.length) * 100;
-        
+
+    const pourInterval = setInterval(() => {
+      if (charIndex < this.row1Letters.length) {
+        // Reveal the letter — it now sits to the left of the truck in DOM order
+        this.row1Letters[charIndex].visible = true;
+
+        // Briefly tip the bed
+        this.isTipping = true;
+        setTimeout(() => { this.isTipping = false; }, 280);
+
         charIndex++;
       } else {
-        clearInterval(typeInterval);
-        this.isTyping = false;
+        clearInterval(pourInterval);
+
+        // Brief pause then hide truck and start roller
+        setTimeout(() => {
+          this.isTruckActive = false;
+          setTimeout(() => this.startRoadRoller(), 400);
+        }, 300);
       }
-    }, this.typingSpeed);
+    }, 160);
   }
-  
-  
+
+  // ─── PHASE 2: Road Roller rolls left, letters appear behind it ─────────────
+
+  private startRoadRoller(): void {
+    this.isRollerActive = true;
+
+    // Row 2 letters need to appear right-to-left (roller moves left, trails to its right).
+    // We reveal them from the LAST index down to 0 so the rightmost letter appears first.
+    const total = this.row2Letters.length;
+    let step = 0; // how many letters have been revealed
+
+    const stampInterval = setInterval(() => {
+      if (step < total) {
+        // Reveal from the right end backwards so the roller "pushes" left
+        // and leaves a growing trail to its right
+        const targetIndex = total - 1 - step;
+        this.row2Letters[targetIndex].visible = true;
+        step++;
+      } else {
+        clearInterval(stampInterval);
+
+        setTimeout(() => {
+          this.isRollerActive = false;
+          this.animationComplete = true;
+        }, 300);
+      }
+    }, 160);
+  }
+
+  // ─── Scroll ────────────────────────────────────────────────────────────────
+
   @HostListener('window:scroll', ['$event'])
-  onScroll(event: Event) {
+  onScroll(_event: Event): void {
     this.scrollY = window.scrollY;
   }
 }

@@ -3,6 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
+export interface ProjectProgress {
+  id: number;
+  title: string;
+  description: string;
+  progressPercentage: number;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface Project {
   id: string;
   category: string;
@@ -26,17 +36,25 @@ export interface Project {
     location: string;
     cost: string;
   };
+  progressUpdates?: ProjectProgress[];
 }
 
 @Injectable({ providedIn: 'root' })
 export class ProjectsService {
   private baseUrl = `${environment.apiBaseUrl}/api/project`;
+  private progressBaseUrl = `${environment.apiBaseUrl}/api/project-progress`;
 
   constructor(private http: HttpClient) {}
 
   getProjectById(id: string): Observable<Project> {
     return this.http.get<any>(`${this.baseUrl}/${id}`).pipe(
       map(apiProject => this.mapApiProjectToClient(apiProject))
+    );
+  }
+
+  getProjectProgress(projectId: string): Observable<ProjectProgress[]> {
+    return this.http.get<any>(`${this.progressBaseUrl}/project/${projectId}`).pipe(
+      map(response => response.data)
     );
   }
 
