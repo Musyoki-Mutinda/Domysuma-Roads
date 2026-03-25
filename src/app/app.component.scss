@@ -23,3 +23,143 @@ body.dark-mode :host {
     transform: translateY(0);
   }
 }
+
+/* Loading screen styles */
+:host.loading {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  font-family: 'Playfair Display', Georgia, serif;
+  overflow: hidden;
+}
+
+/* grain overlay */
+:host.loading::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 180px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+
+/* ── wrapper ── */
+#loader {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+/* ── roof (logo) ── */
+#roof {
+  width: calc(var(--block-size) * 2.5 + var(--gap));
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 6px;
+  opacity: 0;
+  transform: translateY(-40px);
+  /* animation applied via JS */
+}
+#roof svg { width: 100%; height: auto; }
+
+/* ── 2×2 grid ── */
+#grid {
+  display: grid;
+  grid-template-columns: repeat(2, var(--block-size));
+  grid-template-rows:    repeat(2, var(--block-size));
+  gap: var(--gap);
+}
+
+.block {
+  border-radius: var(--radius);
+  position: relative;
+  overflow: hidden;
+}
+
+/* colour mapping */
+.block-tl { background: var(--brown-dark);  }
+.block-tr { background: var(--blue);        }   /* the rolling one */
+.block-bl { background: var(--brown-mid);   }
+.block-br { background: var(--brown-light); }
+
+/* subtle inner shine */
+.block::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255,255,255,.12) 0%, transparent 60%);
+}
+
+/* ── rolling block (TR) ── */
+/*
+   The block starts below the grid floor, rolls up (translateY),
+   then slots into the top-right cell.
+   We use a wrapper that lives OUTSIDE the grid so it can animate freely.
+*/
+#rolling-wrapper {
+  position: absolute;
+  /* positioned relative to #stage – set via JS */
+  pointer-events: none;
+}
+
+#rolling-block {
+  width: var(--block-size);
+  height: var(--block-size);
+  border-radius: var(--radius);
+  background: var(--blue);
+  position: relative;
+  overflow: hidden;
+}
+#rolling-block::after {
+  content: '';
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255,255,255,.18) 0%, transparent 60%);
+}
+
+/* placeholder so grid keeps its shape while TR is animating */
+.block-tr { visibility: hidden; }
+
+/* ── progress bar ── */
+#progress-wrap {
+  margin-top: 28px;
+  width: calc(var(--block-size) * 2 + var(--gap));
+  height: 3px;
+  background: rgba(89,74,66,.15);
+  border-radius: 99px;
+  overflow: hidden;
+}
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--blue);
+  border-radius: 99px;
+  transition: width 0.12s linear;
+}
+
+/* ── label ── */
+#label {
+  margin-top: 16px;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--brown-mid);
+  opacity: 0.7;
+}
+
+/* ── fade-out of whole loader ── */
+#loader.fade-out {
+  animation: loaderFade .5s ease forwards;
+}
+@keyframes loaderFade {
+  to { opacity: 0; transform: scale(1.04); }
+}

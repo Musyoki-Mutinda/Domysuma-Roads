@@ -99,3 +99,18 @@
     }
   }
 }
+
+// Dark mode styles
+body.dark-mode {
+  .plan-item-card-cont {
+    background: #ffffff !important;
+
+    h4 {
+      color: #000000 !important;
+    }
+
+    .plan-item-card-footer p {
+      color: #000000 !important;
+    }
+  }
+}

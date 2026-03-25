@@ -1,10 +1,12 @@
 <section class="testimonials-sec">
   <div class="container">
-    <div class="testimonials-header">
-      <h2>What our users say</h2>
-    </div>
-    <div class="testimonials-container">
-      <button class="nav-arrow prev-arrow" (click)="previousCard()">
+    <div class="testimonials-content">
+      <div class="testimonials-header">
+        <h2>What our Customers say</h2>
+        <p class="testimonials-subtitle">At Domysuma, our customers' satisfaction is our highest satisfaction. Here's what some of our customers had to say</p>
+      </div>
+      <div class="testimonials-container">
+      <button class="nav-arrow prev-arrow" (click)="previousCard()" [disabled]="!canGoPrevious">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <polyline points="15 18 9 12 15 6"></polyline>
         </svg>
@@ -33,11 +35,12 @@
           </div>
         </div>
       </div>
-      <button class="nav-arrow next-arrow" (click)="nextCard()">
+      <button class="nav-arrow next-arrow" (click)="nextCard()" [disabled]="!canGoNext">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <polyline points="9 18 15 12 9 6"></polyline>
         </svg>
       </button>
+      </div>
     </div>
   </div>
 </section>

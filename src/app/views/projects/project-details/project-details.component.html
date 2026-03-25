@@ -142,6 +142,25 @@
               </div>
               <small class="text-muted">{{ progress.progressPercentage }}% Complete</small>
             </div>
+
+            <!-- File Attachments -->
+            <div *ngIf="progress.fileAttachments" class="mt-2">
+              <label class="form-label">Attachments:</label>
+              <div *ngIf="progress.fileAttachments && progress.fileAttachments !== '[]'">
+                <div class="attachment-list">
+                  <div *ngFor="let file of getFileAttachments(progress.fileAttachments)" class="attachment-item">
+                    <i class="fa-solid fa-paperclip"></i>
+                    <a href="{{ file }}" target="_blank">{{ file }}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Remarks -->
+            <div *ngIf="progress.remarks" class="mt-2">
+              <label class="form-label">Remarks:</label>
+              <p class="remarks-text">{{ progress.remarks }}</p>
+            </div>
           </div>
         </div>
       </div>

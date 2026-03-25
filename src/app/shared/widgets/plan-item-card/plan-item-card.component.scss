@@ -128,3 +128,26 @@
     font-weight: 600;
   }
 }
+
+// Dark mode styles
+body.dark-mode {
+  .plan-item-card-cont {
+    background: #ffffff !important;
+
+    h4 {
+      color: #000000 !important;
+    }
+
+    .plan-item-card-specs span {
+      color: #1c75bc !important; // Keep accent
+    }
+
+    .plan-item-card-footer p {
+      color: #000000 !important;
+    }
+
+    p:last-child {
+      color: #1c75bc !important;
+    }
+  }
+}

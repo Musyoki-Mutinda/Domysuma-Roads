@@ -9,6 +9,8 @@ export interface ProjectProgress {
   description: string;
   progressPercentage: number;
   status: string;
+  fileAttachments: string; // JSON array of file paths/URLs
+  remarks: string; // Comments/Remarks
   createdAt: string;
   updatedAt: string;
 }

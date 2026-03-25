@@ -159,8 +159,8 @@ export class HeaderComponent implements OnInit {
   }
 
   openWhatsApp(): void {
-    const phoneNumber = '254112049044';
-    const message = encodeURIComponent('Hello, I want to inquire about your services');
+    const phoneNumber = '254701150425';
+    const message = encodeURIComponent('Hello, I would like to inquire about your services');
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
   }
 

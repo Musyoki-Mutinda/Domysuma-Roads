@@ -87,6 +87,14 @@ export class TestimonialsComponent {
     }
   }
 
+  get canGoPrevious(): boolean {
+    return this.activeIndex > 0;
+  }
+
+  get canGoNext(): boolean {
+    return this.activeIndex < this.testimonials.length - 1;
+  }
+
   previousCard() {
     if (this.activeIndex > 0) {
       this.activeIndex--;

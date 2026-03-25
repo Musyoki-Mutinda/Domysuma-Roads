@@ -1,5 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
-@import url("https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&family=Poppins:wght@100;300;400;500;600;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Hind:wght@300;400;500;600;700&family=Playfair+Display:wght@600&family=Poppins:wght@100;300;400;500;600;700;900&display=swap");
+
+/* Loading page variables */
+:root {
+  --brown-dark:  #594A42;
+  --brown-mid:   #726658;
+  --brown-light: #8B7B6E;
+  --blue:        #1C75BC;
+  --black:       #231F20;
+  --bg:          #F5F0EB;
+  --block-size:  55px;
+  --gap:         8px;
+  --radius:      9px;
+}
 
 /*------------------------------------------
 ---------------VARIABLES*/
@@ -135,6 +148,7 @@ body {
   text-transform: capitalize;
   font-family: "Poppins", sans-serif;
   font-size: 15px;
+  text-decoration: none;
 
   &:hover {
     transform: scale(1.05);

@@ -397,3 +397,30 @@
     }
   }
 }
+
+// Dark mode styles for cards
+body.dark-mode {
+  .card {
+    background: #ffffff !important;
+
+    .card-content {
+      .card-title {
+        color: #000000 !important;
+      }
+
+      .card-description {
+        color: #000000 !important;
+      }
+
+      .key-features {
+        h5 {
+          color: #000000 !important;
+        }
+
+        ul li {
+          color: #000000 !important;
+        }
+      }
+    }
+  }
+}

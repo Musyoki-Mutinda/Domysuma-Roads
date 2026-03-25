@@ -277,6 +277,46 @@ h5 {
               background-color: #007bff;
             }
           }
+
+          .attachment-list {
+            margin-top: 10px;
+
+            .attachment-item {
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              padding: 8px;
+              background-color: #f8f9fa;
+              border-radius: 4px;
+              margin-bottom: 4px;
+
+              i {
+                color: #ffc107;
+                font-size: 16px;
+              }
+
+              a {
+                color: #1c75bc;
+                text-decoration: none;
+                font-size: 14px;
+
+                &:hover {
+                  text-decoration: underline;
+                }
+              }
+            }
+          }
+        }
+
+        .remarks-text {
+          margin-top: 10px;
+          padding: 12px;
+          background-color: #f8f9fa;
+          border-radius: 4px;
+          border-left: 3px solid #1c75bc;
+          font-style: italic;
+          color: #555;
+          line-height: 1.5;
         }
       }
     }

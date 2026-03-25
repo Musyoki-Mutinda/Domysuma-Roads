@@ -8,69 +8,76 @@
   <div class="hero-content">
     <div class="content-wrapper">
 
-      <!-- Title Animation Container -->
       <div class="construction-title-container">
 
-        <!-- ROW 1: Tipper Truck leads inline, letters trail behind it to the left -->
+        <!-- ROW 1: Tipper Truck drives LEFT → RIGHT, letters appear in its wake -->
         <div class="title-row row-1">
-          <div class="title-track">
+          <div class="vehicle-runway">
 
-            <!-- Letters rendered first, sitting to the left of the truck -->
-            <span
-              *ngFor="let item of row1Letters; let i = index"
-              class="letter"
-              [class.visible]="item.visible"
-              [class.orange]="item.color === 'orange'"
-              [class.white]="item.color === 'white'"
-              [class.pour-in]="item.visible">
-              <ng-container *ngIf="item.char === ' '">&nbsp;</ng-container>
-              <ng-container *ngIf="item.char !== ' '">{{ item.char }}</ng-container>
-            </span>
-
-            <!-- Tipper Truck — inline at the leading edge, moves right -->
-            <span class="inline-vehicle tipper-truck"
-                  [class.tipping]="isTipping"
-                  *ngIf="isTruckActive">
-              <span class="debris d1" [class.active]="isTipping"></span>
-              <span class="debris d2" [class.active]="isTipping"></span>
-              <span class="debris d3" [class.active]="isTipping"></span>
-              <span class="pour-dust" [class.active]="isTipping"></span>
-              <span class="vehicle-icon">
-                <i class="fas fa-truck"></i>
+            <!-- Single set of letters. All exist in DOM (reserves width). Invisible until revealed. -->
+            <div class="title-track" #row1Track>
+              <span
+                *ngFor="let item of row1Letters; let i = index"
+                class="letter"
+                [class.visible]="item.visible"
+                [class.orange]="item.color === 'orange'"
+                [class.white]="item.color === 'white'"
+                [class.pour-in]="item.visible">
+                <ng-container *ngIf="item.char === ' '">&nbsp;</ng-container>
+                <ng-container *ngIf="item.char !== ' '">{{ item.char }}</ng-container>
               </span>
-            </span>
+            </div>
+
+            <!-- Tipper Truck — absolutely positioned, animates across full runway -->
+            <div class="vehicle-wrap tipper-wrap" *ngIf="isTruckActive">
+              <span class="inline-vehicle tipper-truck"
+                    [class.driving]="isTruckDriving"
+                    [class.tipping]="isTipping">
+                <span class="debris d1" [class.active]="isTipping"></span>
+                <span class="debris d2" [class.active]="isTipping"></span>
+                <span class="debris d3" [class.active]="isTipping"></span>
+                <span class="pour-dust" [class.active]="isTipping"></span>
+                <span class="vehicle-icon">
+                  <i class="fas fa-truck"></i>
+                </span>
+              </span>
+            </div>
 
           </div>
         </div>
 
-        <!-- ROW 2: Road Roller leads inline from the right, letters trail behind it to the right -->
+        <!-- ROW 2: Road Roller drives RIGHT → LEFT, letters appear in its wake -->
         <div class="title-row row-2">
-          <div class="title-track row2-track">
+          <div class="vehicle-runway">
 
-            <!-- Road Roller — inline at the leading edge (left side), moves left -->
-            <span class="inline-vehicle road-roller"
-                  [class.active]="isRollerActive"
-                  *ngIf="isRollerActive">
-              <span class="vehicle-icon">
-                <i class="fas fa-truck-monster"></i>
+            <div class="title-track" #row2Track>
+              <span
+                *ngFor="let item of row2Letters; let i = index"
+                class="letter"
+                [class.visible]="item.visible"
+                [class.yellow]="item.color === 'yellow'"
+                [class.stamp-in]="item.visible">
+                <ng-container *ngIf="item.char === ' '">&nbsp;</ng-container>
+                <ng-container *ngIf="item.char !== ' '">{{ item.char }}</ng-container>
               </span>
-              <span class="steam-puff" [class.active]="isRollerActive">
-                <span class="puff p1"></span>
-                <span class="puff p2"></span>
-                <span class="puff p3"></span>
-              </span>
-            </span>
+            </div>
 
-            <!-- Letters trail to the right of the roller -->
-            <span
-              *ngFor="let item of row2Letters; let i = index"
-              class="letter"
-              [class.visible]="item.visible"
-              [class.yellow]="item.color === 'yellow'"
-              [class.stamp-in]="item.visible">
-              <ng-container *ngIf="item.char === ' '">&nbsp;</ng-container>
-              <ng-container *ngIf="item.char !== ' '">{{ item.char }}</ng-container>
-            </span>
+            <!-- Road Roller — enters from right, drives left -->
+            <div class="vehicle-wrap roller-wrap" *ngIf="isRollerActive">
+              <span class="inline-vehicle road-roller"
+                    [class.driving]="isRollerDriving"
+                    [class.active]="isRollerActive">
+                <span class="roller-drum"></span>
+                <span class="vehicle-icon">
+                  <i class="fas fa-truck-monster"></i>
+                </span>
+                <span class="steam-puff" [class.active]="isRollerActive">
+                  <span class="puff p1"></span>
+                  <span class="puff p2"></span>
+                  <span class="puff p3"></span>
+                </span>
+              </span>
+            </div>
 
           </div>
         </div>
@@ -78,16 +85,12 @@
       </div>
 
       <!-- Subtitle -->
-      <p class="hero-subtitle"
-         *ngIf="animationComplete"
-         [@fadeIn]>
+      <p class="hero-subtitle" *ngIf="animationComplete" [@fadeIn]>
         Infrastructure That Lasts Generations
       </p>
 
       <!-- CTA Buttons -->
-      <div class="hero-actions"
-           *ngIf="animationComplete"
-           [@fadeIn]>
+      <div class="hero-actions" *ngIf="animationComplete" [@fadeIn]>
         <a routerLink="/quote" class="btn-primary">
           Request a Quote
           <i class="fas fa-arrow-right"></i>
@@ -98,9 +101,7 @@
       </div>
 
       <!-- Trust Badges -->
-      <div class="trust-badges"
-           *ngIf="animationComplete"
-           [@fadeIn]>
+      <div class="trust-badges" *ngIf="animationComplete" [@fadeIn]>
         <div class="badge">
           <i class="fas fa-certificate"></i>
           <span>NCA Registered</span>

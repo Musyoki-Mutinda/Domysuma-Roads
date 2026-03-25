@@ -162,9 +162,15 @@ section {
 /* ------------------ DESIGN PHILOSOPHY SECTION ------------------ */
 .design-philosophy-sec {
   background: #ffffff; // Different from About Us section
-  
+
   .about-content.reversed {
     flex-direction: row-reverse; // Image on left, text on right
+  }
+
+  .commitment-btn {
+    display: block;
+    margin: 30px auto 0;
+    text-align: center;
   }
 
   @include tablet {

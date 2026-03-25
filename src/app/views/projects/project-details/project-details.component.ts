@@ -114,6 +114,18 @@ export class ProjectDetailsComponent implements OnInit {
     }
   }
 
+  getFileAttachments(fileAttachmentsJson: string): string[] {
+    if (!fileAttachmentsJson || fileAttachmentsJson === '[]') {
+      return [];
+    }
+    try {
+      return JSON.parse(fileAttachmentsJson);
+    } catch (e) {
+      console.error('Error parsing file attachments:', e);
+      return [];
+    }
+  }
+
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     console.log('=== PROJECT DETAILS - Loading ID:', id);

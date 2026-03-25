@@ -95,6 +95,23 @@
           }
         }
       }
+      
+      // Dark mode styles
+      body.dark-mode {
+        .equipment-item {
+          background: #ffffff !important;
+      
+          .equipment-content {
+            h3 {
+              color: #000000 !important;
+            }
+      
+            p {
+              color: #000000 !important;
+            }
+          }
+        }
+      }
 
       .section-conclusion {
         text-align: center;

@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { AuthService } from '../../../auth/auth.service';
 import { AdminAuthService } from '../../../auth/admin-auth.service';
+import { AdminTokenService } from '../../../auth/admin-token.service';
 import { Router } from '@angular/router';
 import { LoginModalService } from '../../../core/services/login-modal.service';
 import { Subscription } from 'rxjs';
@@ -46,17 +47,16 @@ export class LoginModalComponent implements OnInit, OnDestroy {
   constructor(
     private auth: AuthService,
     private adminAuth: AdminAuthService,
+    private tokenService: AdminTokenService,
     private router: Router,
     private loginModalService: LoginModalService
   ) {}
 
   ngOnInit() {
-    // Track modal open/close state
     this.modalSubscription = this.loginModalService.isOpen$.subscribe(open => {
       this.isOpen = open;
     });
 
-    // Reveal admin login button with Shift + A (for desktop/keyboard)
     this.keyListener = (event: KeyboardEvent) => {
       if (event.shiftKey && event.key === 'A') {
         this.showAdminButton = true;
@@ -71,47 +71,40 @@ export class LoginModalComponent implements OnInit, OnDestroy {
       this.modalSubscription.unsubscribe();
     }
     window.removeEventListener('keydown', this.keyListener);
-    
+
     if (this.tapTimeout) {
       clearTimeout(this.tapTimeout);
     }
   }
 
-  // Secret tap function for mobile/tablet (5 quick taps)
   onSecretTap() {
     this.tapCount++;
 
-    // Clear the previous timeout
     if (this.tapTimeout) {
       clearTimeout(this.tapTimeout);
     }
 
-    // If 5 taps within 4 seconds, reveal admin button
     if (this.tapCount >= 5) {
       this.showAdminButton = true;
       this.tapCount = 0;
       return;
     }
 
-    // Reset tap count after 4 seconds of inactivity
     this.tapTimeout = setTimeout(() => {
       this.tapCount = 0;
     }, 4000);
   }
 
-  // Close modal
   closeModal() {
     this.loginModalService.close();
     this.close.emit();
   }
 
-  // Register toggle
   toggleMode() {
     this.isRegisterMode = !this.isRegisterMode;
     this.errorMsg = '';
   }
 
-  // Admin mode controls
   enableAdminMode() {
     this.isAdminMode = true;
     this.errorMsg = '';
@@ -137,24 +130,17 @@ export class LoginModalComponent implements OnInit, OnDestroy {
       password: this.adminPassword
     }).subscribe({
       next: (response: any) => {
-        // Success - redirect to admin dashboard
+        // Save tokens to localStorage before redirecting
+        this.tokenService.setAccessToken(response.token);
+        this.tokenService.setRefreshToken(response.refreshToken);
+
         this.closeModal();
         window.location.href = environment.adminUrl + '/dashboard';
       },
-      error: (err) => {
-        // Check if this is the CORS error (which means auth succeeded but redirect was blocked)
-        if (err.status === 0 && err.statusText === 'Unknown Error') {
-          // The login actually succeeded! The backend tried to redirect but CORS blocked it.
-          // So we manually redirect here
-          console.log('Login successful - redirecting to admin dashboard');
-          this.closeModal();
-          window.location.href = environment.adminUrl + '/dashboard';
-        } else {
-          // Actual login failure
-          this.loading = false;
-          this.errorMsg = 'Admin login failed. Please try again.';
-          console.error('Admin login error:', err);
-        }
+      error: (err: unknown) => {
+        this.loading = false;
+        this.errorMsg = 'Admin login failed. Please try again.';
+        console.error('Admin login error:', err);
       }
     });
   }
@@ -172,7 +158,6 @@ export class LoginModalComponent implements OnInit, OnDestroy {
     this.auth.login(this.email, this.password).subscribe({
       next: (res: any) => {
         const role = this.auth.getRole();
-
         this.closeModal();
 
         if (role === 'ADMIN') {
@@ -181,10 +166,10 @@ export class LoginModalComponent implements OnInit, OnDestroy {
           this.router.navigate(['/home']);
         }
       },
-      error: (err) => {
+      error: (err: unknown) => {
         this.loading = false;
         this.errorMsg =
-          err.status === 401
+          (err as any).status === 401
             ? 'Invalid email or password.'
             : 'Login failed.';
       }
@@ -203,7 +188,6 @@ export class LoginModalComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // Split full name into first and last name
     const nameParts = this.registerFullName.trim().split(' ');
     const firstName = nameParts[0];
     const lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : '';
@@ -212,26 +196,24 @@ export class LoginModalComponent implements OnInit, OnDestroy {
     this.errorMsg = '';
 
     this.auth.register({
-      firstName: firstName,
-      lastName: lastName,
+      firstName,
+      lastName,
       email: this.registerEmail,
       password: this.registerPassword
     }).subscribe({
       next: () => {
         this.loading = false;
-        // Clear registration form
         this.registerFullName = '';
         this.registerEmail = '';
         this.registerPassword = '';
         this.registerConfirmPassword = '';
-        // Switch to login mode
         this.isRegisterMode = false;
         this.errorMsg = 'Registration successful! Please login with your credentials.';
       },
-      error: (err) => {
+      error: (err: unknown) => {
         this.loading = false;
         this.errorMsg =
-          err.status === 409
+          (err as any).status === 409
             ? 'Email already in use.'
             : 'Registration failed.';
       }

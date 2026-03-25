@@ -57,3 +57,19 @@ app-plan-item-card,
     justify-items: center; // Center align the projects
   }
 }
+
+// Dark mode styles
+body.dark-mode {
+  .featured-design {
+    background: #0f0f0f !important; // Override to dark
+
+    h2 {
+      color: #ff6b00 !important; // Keep accent
+    }
+  }
+
+  app-plan-item-card,
+  .custom-card-item {
+    background: #ffffff !important;
+  }
+}

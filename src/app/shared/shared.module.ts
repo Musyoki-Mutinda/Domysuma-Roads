@@ -12,7 +12,6 @@ import { ProjectItemCardComponent } from './widgets/project-item-card/project-it
 import { GalleryComponent } from './widgets/gallery/gallery.component';
 import { LoginModalComponent } from './components/login-modal/login-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { InViewDirective } from '../core/directives/in-view.directive';
 
 const components = [
   HeaderComponent,
@@ -23,8 +22,7 @@ const components = [
   BreadCrumbComponent,
   GalleryComponent,
   ContactFormPopupComponent,
-  LoginModalComponent,
-  InViewDirective
+  LoginModalComponent
 ];
 
 const modules = [

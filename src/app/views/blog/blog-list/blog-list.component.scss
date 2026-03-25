@@ -134,6 +134,57 @@
           }
         }
       }
+      
+      // Dark mode styles
+      body.dark-mode {
+        .blog-card {
+          background-color: #ffffff !important;
+      
+          .blog-card-content {
+            .meta {
+              color: #000000 !important;
+      
+              span {
+                color: #FF8C00 !important; // Keep accent color
+              }
+            }
+      
+            h3 {
+              color: #000000 !important;
+            }
+      
+            .excerpt {
+              color: #000000 !important;
+            }
+      
+            .read-more {
+              color: #FF8C00 !important;
+            }
+          }
+        }
+      
+        .blog-sidebar {
+          background-color: #ffffff !important;
+      
+          h3 {
+            color: #000000 !important;
+          }
+      
+          .sidebar-post {
+            background-color: #ffffff !important;
+      
+            .sidebar-content {
+              a {
+                color: #000000 !important;
+              }
+      
+              .meta {
+                color: #000000 !important;
+              }
+            }
+          }
+        }
+      }
     }
 
     .loading, .no-results {
