@@ -63,9 +63,6 @@
 }
 
 // ─── Vehicle Runway ───────────────────────────────────────────────────────────
-// Spans full viewport width so vehicles travel edge-to-edge.
-// overflow:hidden clips the vehicle while off-screen.
-// The title-track inside stays centred naturally.
 
 .vehicle-runway {
   position: relative;
@@ -79,15 +76,12 @@
 }
 
 // ─── Title Track ─────────────────────────────────────────────────────────────
-// Contains ONE set of letters. They are always in the DOM (width is always
-// reserved — no layout shift). Letters start opacity:0 and animate in when
-// .visible is applied by the TypeScript.
 
 $title-font-size: clamp(2.2rem, 5.5vw, 3.3rem);
 
 .title-track {
   display: inline-block;
-  white-space: nowrap;   // keep all letters on one line
+  white-space: nowrap;
   line-height: 1.3;
 }
 
@@ -103,21 +97,16 @@ $title-font-size: clamp(2.2rem, 5.5vw, 3.3rem);
   line-height: 1.2;
   color: #ffffff;
 
-  // All letters invisible by default — they take up space but aren't seen.
-  // This is what reserves the full row width from the start.
   opacity: 0;
-  // No transform here — animation keyframes handle the entry motion
 
   &.orange { color: #FF6B00; }
   &.white  { color: #ffffff; }
   &.yellow { color: #FFD700; }
 
-  // Row 1: tumble in from above (poured out by truck)
   &.pour-in {
     animation: pourIn 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
 
-  // Row 2: squash then spring up (pressed by roller)
   &.stamp-in {
     animation: stampIn 0.38s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   }
@@ -138,8 +127,6 @@ $title-font-size: clamp(2.2rem, 5.5vw, 3.3rem);
 }
 
 // ─── Vehicle Wrap ─────────────────────────────────────────────────────────────
-// Absolutely positioned over the full-width runway. Vehicles sit inside here
-// and translate across the entire viewport via CSS keyframe animations.
 
 .vehicle-wrap {
   position: absolute;
@@ -160,37 +147,41 @@ $title-font-size: clamp(2.2rem, 5.5vw, 3.3rem);
   display: inline-flex;
   align-items: center;
   position: relative;
-  font-size: $title-font-size;
   line-height: 1;
   flex-shrink: 0;
+}
 
-  .vehicle-icon {
-    display: inline-flex;
-    align-items: center;
+// ─── SVG Vehicle sizing ───────────────────────────────────────────────────────
+// Both SVGs use a 220×120 viewBox. We size them relative to the title font size
+// so they scale consistently with the text on all screen sizes.
 
-    i {
-      font-size: 1.6em;
-      filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.7));
-      display: block;
-    }
-  }
+.vehicle-svg {
+  display: block;
+  // Height matches roughly 2× the title row height — feels proportional
+  height: calc(#{$title-font-size} * 2.2);
+  width: auto;
+  overflow: visible; // allow shadow to bleed slightly
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.6));
 }
 
 // ─── Tipper Truck ─────────────────────────────────────────────────────────────
 
 .tipper-truck {
   // Parked off the left edge before .driving kicks in
-  transform: translateX(calc(-100vw - 4em));
-
-  .vehicle-icon i {
-    color: #FF6B00;
-    // transform: scaleX(-1); // fa-truck faces left by default — flip to face RIGHT
-  }
+  transform: translateX(calc(-100vw - 6em));
 
   // Drive left → right across the full viewport
   // Duration MUST match TRUCK_DURATION_MS in the TypeScript (4000ms)
   &.driving {
     animation: truckDriveAcross 4000ms linear forwards;
+  }
+
+  // Tip the bed upward from its rear pivot (left edge of bed, x≈14 in SVG coords)
+  // The .tipper-bed g in the SVG gets this animation when .tipping is active
+  &.tipping .tipper-svg .tipper-bed {
+    transform-origin: 14px 62px;          // rear hinge point of the bed
+    transform-box: fill-box;
+    animation: bedTipUp 0.28s ease-in-out forwards;
   }
 
   .debris {
@@ -199,9 +190,9 @@ $title-font-size: clamp(2.2rem, 5.5vw, 3.3rem);
     opacity: 0;
     pointer-events: none;
 
-    &.d1 { width: 0.18em; height: 0.18em; background: #FFD700; top: 20%; left: -0.1em; }
-    &.d2 { width: 0.14em; height: 0.14em; background: #FF6B00; top: 40%; left: -0.05em; }
-    &.d3 { width: 0.12em; height: 0.12em; background: #fff;    top: 60%; left: -0.15em; }
+    &.d1 { width: 0.18em; height: 0.18em; background: #FFD700; top: 20%; left: -0.1em; font-size: $title-font-size; }
+    &.d2 { width: 0.14em; height: 0.14em; background: #FF6B00; top: 40%; left: -0.05em; font-size: $title-font-size; }
+    &.d3 { width: 0.12em; height: 0.12em; background: #fff;    top: 60%; left: -0.15em; font-size: $title-font-size; }
 
     &.active { animation: debrisFly 0.38s ease-out forwards; }
   }
@@ -213,26 +204,24 @@ $title-font-size: clamp(2.2rem, 5.5vw, 3.3rem);
     width: 0.6em; height: 0.6em;
     border-radius: 50%;
     background: radial-gradient(circle, rgba(255,180,60,0.55) 0%, transparent 70%);
+    font-size: $title-font-size;
     opacity: 0;
     pointer-events: none;
 
     &.active { animation: dustPuff 0.32s ease-out forwards; }
   }
-
-  &.tipping .vehicle-icon i {
-    animation: truckTip 0.28s ease-in-out;
-  }
 }
 
 @keyframes truckDriveAcross {
-  from { transform: translateX(calc(-100vw - 4em)); }
-  to   { transform: translateX(calc(100vw  + 4em)); }
+  from { transform: translateX(calc(-100vw - 6em)); }
+  to   { transform: translateX(calc(100vw  + 6em)); }
 }
 
-@keyframes truckTip {
+@keyframes bedTipUp {
   0%   { transform: rotate(0deg); }
-  40%  { transform: rotate(-4deg); }
-  100% { transform: rotate(0deg); }
+  35%  { transform: rotate(-18deg); }   // bed swings up sharply
+  70%  { transform: rotate(-14deg); }   // brief hold at peak — soil "pours"
+  100% { transform: rotate(0deg); }     // settles back down
 }
 
 @keyframes debrisFly {
@@ -250,11 +239,15 @@ $title-font-size: clamp(2.2rem, 5.5vw, 3.3rem);
 
 .road-roller {
   // Parked off the right edge before .driving kicks in
-  transform: translateX(calc(100vw + 4em));
+  transform: translateX(calc(100vw + 6em));
 
-  .vehicle-icon i {
-    color: #FFD700;
-    transform: scaleX(-1); // face LEFT — driving right → left
+  // Mirror the SVG so it faces LEFT (driving right → left)
+  .roller-svg {
+    transform: scaleX(-1);
+
+    .drum {
+      animation: drumSpin 0.5s linear infinite;
+    }
   }
 
   // Drive right → left across the full viewport
@@ -263,30 +256,31 @@ $title-font-size: clamp(2.2rem, 5.5vw, 3.3rem);
     animation: rollerDriveAcross 4000ms linear forwards;
   }
 
-  .roller-drum {
-    display: inline-block;
-    width: 0.35em; height: 0.55em;
-    border-radius: 0.18em;
-    background: conic-gradient(#aaa 0deg, #666 90deg, #aaa 180deg, #888 270deg, #aaa 360deg);
-    border: 0.04em solid #999;
-    flex-shrink: 0;
-    align-self: flex-end;
-    margin-bottom: 0.05em;
+  // Spin the front drum SVG ellipse via a wrapper trick — we animate the whole SVG
+  // slightly (subtle) since individual SVG elements can't be easily targeted from SCSS.
+  // For true drum spin, see the note below about adding a CSS class to the drum group.
+  &.active .roller-svg {
+    // The drum is part of the SVG — we pulse a subtle vibration to suggest rolling
+    animation: rollerVibrate 0.15s linear infinite;
   }
 
   .steam-puff {
     position: absolute;
-    top: -0.55em; left: 50%;
-    transform: translateX(-50%);
+    // Position above the exhaust stack area.
+    // The SVG is mirrored (scaleX -1), so exhaust is on the visual left = DOM right.
+    // We place steam on the right side of the roller span.
+    top: -1.2em;
+    right: 18%; // roughly above exhaust position in mirrored SVG
     display: flex;
     gap: 0.12em;
     pointer-events: none;
 
     .puff {
-      width: 0.18em; height: 0.18em;
+      width: 0.5em; height: 0.5em;
       border-radius: 50%;
       background: rgba(255,255,255,0.55);
       opacity: 0;
+      font-size: calc(#{$title-font-size} * 0.4);
     }
 
     &.active {
@@ -295,25 +289,27 @@ $title-font-size: clamp(2.2rem, 5.5vw, 3.3rem);
       .p3 { animation: steamRise 0.85s 0.56s infinite ease-out; }
     }
   }
-
-  &.active .roller-drum {
-    animation: drumSpin 0.5s linear infinite;
-  }
 }
 
 @keyframes rollerDriveAcross {
-  from { transform: translateX(calc(100vw  + 4em)); }
-  to   { transform: translateX(calc(-100vw - 4em)); }
+  from { transform: translateX(calc(100vw  + 6em)); }
+  to   { transform: translateX(calc(-100vw - 6em)); }
+}
+
+@keyframes rollerVibrate {
+  0%   { transform: scaleX(-1) translateY(0); }
+  50%  { transform: scaleX(-1) translateY(-1px); }
+  100% { transform: scaleX(-1) translateY(0); }
+}
+
+@keyframes steamRise {
+  0%   { opacity: 0.65; transform: translateY(0) scale(0.7); }
+  100% { opacity: 0;    transform: translateY(-1.2em) scale(2.5); }
 }
 
 @keyframes drumSpin {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
-}
-
-@keyframes steamRise {
-  0%   { opacity: 0.65; transform: translateY(0) scale(0.7); }
-  100% { opacity: 0;    transform: translateY(-0.6em) scale(2); }
 }
 
 // ─── Subtitle ─────────────────────────────────────────────────────────────────
@@ -347,7 +343,7 @@ $title-font-size: clamp(2.2rem, 5.5vw, 3.3rem);
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Times New Roman', serif;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
   }
 
@@ -415,7 +411,6 @@ $title-font-size: clamp(2.2rem, 5.5vw, 3.3rem);
   .construction-title-container {
     margin-left: 15rem;
   }
-
 
   .hero-content .content-wrapper {
     padding: 3rem;

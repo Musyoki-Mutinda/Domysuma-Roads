@@ -33,7 +33,7 @@
              left: 0;
              width: 80px;
              height: 4px;
-             background: linear-gradient(90deg, #f59e0b, #fbbf24);
+             background: linear-gradient(90deg, #FF6B00, #fbbf24);
              border-radius: 2px;
            }
          }
@@ -213,9 +213,102 @@
           object-fit: contain;
         }
      }
-   }
+    }
 
-   // Dark mode styles
+    // Background images for odd-numbered testimonial cards
+    .testimonial-card:nth-child(1) {
+      background-image: url('/assets/about/testimonial1.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      .star-rating .star {
+        color: white;
+      }
+
+      .content {
+        color: white;
+      }
+
+      .author-name {
+        color: white;
+      }
+
+      .posted-on {
+        color: white;
+      }
+    }
+
+    .testimonial-card:nth-child(3) {
+      background-image: url('/assets/about/testimonial3.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      .star-rating .star {
+        color: white;
+      }
+
+      .content {
+        color: white;
+      }
+
+      .author-name {
+        color: white;
+      }
+
+      .posted-on {
+        color: white;
+      }
+    }
+
+    .testimonial-card:nth-child(5) {
+      background-image: url('/assets/about/testimonial5.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      .star-rating .star {
+        color: white;
+      }
+
+      .content {
+        color: white;
+      }
+
+      .author-name {
+        color: white;
+      }
+
+      .posted-on {
+        color: white;
+      }
+    }
+
+    .testimonial-card:nth-child(7) {
+      background-image: url('/assets/about/testimonial7.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
+      .star-rating .star {
+        color: white;
+      }
+
+      .content {
+        color: white;
+      }
+
+      .author-name {
+        color: white;
+      }
+
+      .posted-on {
+        color: white;
+      }
+    }
+
+    // Dark mode styles
    body.dark-mode {
      .testimonial-card {
        background: #ffffff !important;

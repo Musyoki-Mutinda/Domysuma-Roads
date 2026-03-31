@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   /* TYPING EFFECT */
   currentWord = '';
-  private fullWord = 'Construction';
+  private fullWord = 'Building & Road Works';
   private isDeleting = false;
   private typingSpeed = 150;
   private deletingSpeed = 100;

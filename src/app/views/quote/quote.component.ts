@@ -18,15 +18,16 @@ export class QuoteComponent implements OnInit {
     { value: 'other', label: 'Other' }
   ];
   budgetRanges = [
-    { value: '0-50000', label: 'Below KES 50,000' },
-    { value: '50000-200000', label: 'KES 50,000 - KES 200,000' },
-    { value: '200000-500000', label: 'KES 200,000 - KES 500,000' },
-    { value: '500000-1000000', label: 'KES 500,000 - KES 1,000,000' },
-    { value: '1000000+', label: 'Above KES 1,000,000' }
+    { value: '5000000-10000000', label: 'KES 5,000,000 - KES 10,000,000' },
+    { value: '10000000-20000000', label: 'KES 10,000,000 - KES 20,000,000' },
+    { value: '20000000-50000000', label: 'KES 20,000,000 - KES 50,000,000' },
+    { value: '50000000-100000000', label: 'KES 50,000,000 - KES 100,000,000' },
+    { value: '100000000+', label: 'Above KES 100,000,000' }
   ];
   uploadedFiles: File[] = [];
   formSubmitted = false;
   formSuccess = false;
+  isRecaptchaVerified = false;
 
   constructor(private fb: FormBuilder) {
     this.quoteForm = this.fb.group({
@@ -52,6 +53,13 @@ export class QuoteComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.isRecaptchaVerified = (window as any).grecaptcha && (window as any).grecaptcha.getResponse().length > 0;
+
+    if (!this.isRecaptchaVerified) {
+      this.formSubmitted = true;
+      return;
+    }
+
     this.formSubmitted = true;
 
     if (this.quoteForm.valid) {
@@ -65,6 +73,10 @@ export class QuoteComponent implements OnInit {
         this.quoteForm.reset();
         this.uploadedFiles = [];
         this.formSubmitted = false;
+        this.isRecaptchaVerified = false;
+        if ((window as any).grecaptcha) {
+          (window as any).grecaptcha.reset();
+        }
       }, 2000);
     }
   }

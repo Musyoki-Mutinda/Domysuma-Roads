@@ -154,6 +154,14 @@
         </div>
       </div>
 
+      <!-- reCAPTCHA -->
+      <div class="form-group">
+        <div class="g-recaptcha" data-sitekey="6LeS3p8sAAAAAFlbnDx-Tiey0p49h0lA_-0lH4Os"></div>
+        <div *ngIf="formSubmitted && !isRecaptchaVerified" class="error-message">
+          Please verify that you are not a robot
+        </div>
+      </div>
+
       <!-- Submit Button -->
       <div class="form-actions">
         <button type="submit" class="btn-submit" [disabled]="formSubmitted">
